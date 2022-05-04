@@ -1,4 +1,16 @@
+asgiref
 django
 django-crispy-forms
-whitenoise
+django-cors-headers
+django-mongodb-engine
+djangorestframework
+djangotoolbox
+djongo
+dnspython
 fontawesomefree
+mongoengine
+pymongo
+pytz
+sqlparse
+tzdata
+whitenoise

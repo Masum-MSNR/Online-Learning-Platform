@@ -24,11 +24,15 @@
         </label>
         <label class="logo">Online Learning</label>
         <ul>
-          <li><a href="#" class="active">Home</a></li>
-          <li><a href="#">Categories</a></li>
-          <li><a href="#">Log in</a></li>
-          <li><a href="#">Sign up</a></li>
-          <li><a href="#"><i class="fa-solid fa-cart-arrow-down"></i></a></li>
+          <li>
+            <input type="search" placeholder="Search" class="search-box">
+            <label for="srch" class="search-icon"><i class="fa-solid fa-search"></i></label>
+          </li>
+          <li><a href="/" class="{% block Home %} {% endblock %}">Home</a></li>
+          <li><a href="categories" class="{% block Categories %} {% endblock %}">Categories</a></li>
+          <li><a href="login" class="{% block Login %} {% endblock %}">Log in</a></li>
+          <li><a href="signup" class="{% block Signup %} {% endblock %}">Sign up</a></li>
+          <li><a href="cart" class="{% block Cart %} {% endblock %}"><i class="fa-solid fa-cart-arrow-down"></i></a></li>
         </ul>
       </div>
     </nav>
