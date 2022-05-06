@@ -5,10 +5,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-tzsoczy)u=c_1n3x@vvg(+l5k+&!mg8u)wdp^)@k(8z*#f51t^'
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['online-learning-platform.azurewebsites.net']
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'online-learning-platform.azurewebsites.net',
+    '127.0.0.1',
+]
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.online-learning-platform.azurewebsites.net',
+    'https://*.127.0.0.1',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -60,11 +66,15 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'onlinelearning',
         'CLIENT': {
-            'host': 'mongodb+srv://masum:masum@cluster0.i1bpx.mongodb.net/test',
+            'host': 'mongodb+srv://masum:masum@cluster0.9cl0s.mongodb.net/test',
             'username': 'masum',
             'password': 'masum'
         }
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
 }
 
 
@@ -90,17 +100,18 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
 
 
-STATIC_URL = 'static/'
+STATIC_URL = 'base/static/'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_files/')
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'base/static/')
 ]
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
