@@ -8,11 +8,26 @@ section {
 
 }
 
-p label {
+.block-body label {
     display: block;
     margin: 5px 0 5px 0;
     font-size: 17px;
     font-weight: bold;
+}
+
+#id_gender label,
+#id_account_type label {
+    display: block;
+    margin: 5px 0 5px 0;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+#id_gender div,
+#id_account_type div {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    font-size: 17px;
 }
 
 .block-header {
@@ -33,6 +48,7 @@ p label {
 
 input[type=text],
 input[type=password],
+input[type=email],
 input[type=date] {
     height: 100%;
     border: 1px solid gray;

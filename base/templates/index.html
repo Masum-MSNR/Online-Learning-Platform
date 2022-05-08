@@ -10,6 +10,10 @@
 
 {% block title %}Home{% endblock %}
 {% block Home %}active{% endblock %}
+{% block Login %}{% if login %}inactive{% endif %}{% endblock %}
+{% block Signup %}{% if login %}inactive{% endif %}{% endblock %}
+{% block Logout %}{% if not login %}inactive{% endif %}{% endblock %}
+{% block Dashboard %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block content %}
 <section>
     <h2><i class="fa-solid fa-angles-right"></i> Latest Published</h2>

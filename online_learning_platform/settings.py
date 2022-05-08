@@ -16,6 +16,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.127.0.0.1',
 ]
 
+AUTH_USER_MODEL='base.User'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

@@ -8,7 +8,7 @@ section {
 
 }
 
-p label {
+.block-body label {
     display: block;
     margin: 5px 0 5px 0;
     font-size: 17px;
@@ -31,7 +31,7 @@ p label {
     padding: 10px 20px;
 }
 
-input[type=text],
+input[type=email],
 input[type=password] {
     height: 100%;
     border: 1px solid gray;

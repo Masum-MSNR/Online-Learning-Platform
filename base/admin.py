@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import User
 
 class UserAdmin(admin.ModelAdmin):
-    list_display=('first_name','last_name')
+    list_display=('email', 'username','is_admin','date_joined','last_login')
+    search_fields=('email','username')
+    readonly_fields=('id','date_joined','last_login')
 
 admin.site.register(User,UserAdmin)

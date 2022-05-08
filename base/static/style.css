@@ -83,7 +83,7 @@ nav ul li {
     margin: 0 5px;
 }
 
-nav ul li:nth-child(6) a {
+nav ul li a#cart,#logout {
     color: var(--main_color);
     font-size: 20px;
     text-transform: uppercase;
@@ -111,11 +111,18 @@ nav ul li a {
 }
 
 
-a.active,
-a:hover {
+li.active,
+li:hover {
     color: var(--main_color);
     font-weight: bold;
     transition: .5s;
+}
+
+li.inactive {
+    display: none;
+    padding: 0;
+    margin: 0;
+    border: none;
 }
 
 .checkbtn {

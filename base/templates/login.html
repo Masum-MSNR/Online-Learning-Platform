@@ -10,23 +10,17 @@
 
 {% block title %}Log In{% endblock %}
 {% block Login %}active{% endblock %}
+{% block Logout %}inactive{% endblock %}
+{% block Dashboard %}inactive{% endblock %}
 {% block content %}
 
 <section>
-    <form action="#" method="post">
+    <form method="post">
         <div class="block-header">Log In</div>
         <div class="block-body">
-            <p>
-                <label>Email</label>
-                <input id="email" name="email" type="text">
-            </p>
-            <p>
-                <label>Password</label>
-                <input id="password" name="password" type="password">
-            </p>
-            <p>
-                <input type="submit" value="Log In" id="submit">
-            </p>
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Log In" id="submit">
         </div>
     </form>
 </section>
