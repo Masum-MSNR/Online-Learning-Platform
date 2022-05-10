@@ -15,8 +15,8 @@
 {% block content %}
 
 <section>
+    <div class="block-header">Log In</div>
     <form method="post">
-        <div class="block-header">Log In</div>
         <div class="block-body">
             {% csrf_token %}
             {{ form }}

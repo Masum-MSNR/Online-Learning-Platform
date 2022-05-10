@@ -25,29 +25,29 @@
   <header>
     <input type="checkbox" id="check" name="check" role="button">
     <nav>
-      <div class="container">
-        <label for="check" class="checkbtn">
-          <i class="fa-solid fa-bars"></i>
-        </label>
-        <label class="logo">Online Learning</label>
-        <ul>
-          <li>
-            <input type="search" placeholder="Search" class="search-box">
-            <label for="srch" class="search-icon"><i class="fa-solid fa-search"></i></label>
-          </li>
-          <li class="{% block Home %} {% endblock %}"><a href="/">Home</a></li>
-          <li class="{% block Categories %} {% endblock %}"><a href="categories">Categories</a></li>
-          <li class="{% block Dashboard %} {% endblock %}"><a href="dashboard">Dashboard</a></li>
-          <li class="{% block Login %} {% endblock %}"><a href="login">Log in</a></li>
-          <li class="{% block Signup %} {% endblock %}"><a href="signup">Sign up</a></li>
-          <li class="{% block Cart %} {% endblock %}"><a href="cart" id="cart"><i
-                class="fa-solid fa-cart-arrow-down"></i></a>
-          </li>
-          <li class="{% block Logout %} {% endblock %}"><a href="logout" id="logout"><i
-                class="fa-solid fa-arrow-right-from-bracket"></i></a>
-          </li>
-        </ul>
-      </div>
+      <label for="check" class="checkbtn">
+        <i class="fa-solid fa-bars"></i>
+      </label>
+      <label class="search-icon"><i class="fa-solid fa-search"></i></label>
+
+      <label class="logo">Online Learning</label>
+      <ul>
+        <li>
+          <input type="search" placeholder="Search" class="search-box">
+          <label for="srch" class="search-icon"><i class="fa-solid fa-search"></i></label>
+        </li>
+        <li class="{% block Home %} {% endblock %}"><a href="/">Home</a></li>
+        <li class="{% block Categories %} {% endblock %}"><a href="categories">Categories</a></li>
+        <li class="{% block Dashboard %} {% endblock %}"><a href="dashboard">Dashboard</a></li>
+        <li class="{% block Login %} {% endblock %}"><a href="login">Log in</a></li>
+        <li class="{% block Signup %} {% endblock %}"><a href="signup">Sign up</a></li>
+        <li class="{% block Cart %} {% endblock %}"><a href="cart" id="cart"><i
+              class="fa-solid fa-cart-arrow-down"></i></a>
+        </li>
+        <li class="{% block Logout %} {% endblock %}"><a href="logout" id="logout"><i
+              class="fa-solid fa-arrow-right-from-bracket"></i></a>
+        </li>
+      </ul>
     </nav>
   </header>
   <div class="container">

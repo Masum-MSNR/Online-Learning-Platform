@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-tzsoczy)u=c_1n3x@vvg(+l5k+&!mg8u)wdp^)@k(8z*#f51t^'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'online-learning-platform.azurewebsites.net',
@@ -16,7 +16,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.127.0.0.1',
 ]
 
-AUTH_USER_MODEL='base.User'
+AUTH_USER_MODEL = 'base.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
