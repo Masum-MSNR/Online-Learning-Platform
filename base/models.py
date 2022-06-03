@@ -54,6 +54,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=30, default='Other')
     date_of_birth = models.CharField(max_length=60, default='00-00-00')
     account_type = models.CharField(max_length=30, default="Student")
+    is_verified = models.BooleanField(default=False)
+    token = models.CharField(max_length=300)
 
     objects = MyUserManager()
 

@@ -9,10 +9,6 @@
     list-style: none;
 }
 
-nav .search-icon{
-    display: none;
-}
-
 .container {
     width: 100%;
     padding-right: 15px;
@@ -134,13 +130,18 @@ li.inactive {
     display: none;
 }
 
-nav ul .search-icon {
+nav .search-icon{
+    display: none;
+}
+
+nav ul li .search-icon {
     background-color: var(--main_color);
     padding: 7px;
     border-radius: 3px;
     color: white;
     font-size: 16px;
     text-decoration: none;
+    display: inline;
 }
 
 nav ul .search-box {

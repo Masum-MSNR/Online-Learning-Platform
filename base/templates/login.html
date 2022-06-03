@@ -14,6 +14,12 @@
 {% block Dashboard %}inactive{% endblock %}
 {% block content %}
 
+{% if error %}
+<div class="error-block">
+    <div ><span class="disk">*</span> {{ error }}</div>
+</div>
+{% endif %}
+
 <section>
     <div class="block-header">Log In</div>
     <form method="post">

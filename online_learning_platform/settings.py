@@ -5,7 +5,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-tzsoczy)u=c_1n3x@vvg(+l5k+&!mg8u)wdp^)@k(8z*#f51t^'
 
-DEBUG = False
+DEBUG = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nam.bd88@gmail.com'
+EMAIL_HOST_PASSWORD = 'dvprfbjsdwbcxsfl'
 
 ALLOWED_HOSTS = [
     'online-learning-platform.azurewebsites.net',
@@ -16,6 +23,9 @@ CSRF_TRUSTED_ORIGINS = [
     'https://*.127.0.0.1',
 ]
 
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = 'base/cred.json'
+# GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '<base google drive path for file uploads>'
+
 AUTH_USER_MODEL = 'base.User'
 
 INSTALLED_APPS = [
@@ -25,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'gdstorage',
     'fontawesomefree',
     'base.apps.BaseConfig'
 ]

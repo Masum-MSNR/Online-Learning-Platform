@@ -9,4 +9,5 @@ urlpatterns = [
     path("signup", views.signup),
     path("categories", views.categories),
     path("cart", views.cart),
+    path("verify/<str:token>", views.verify),
 ]
