@@ -1,4 +1,5 @@
 import imp
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth import hashers
@@ -70,3 +71,22 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return True
+
+
+class Comment:
+    username = models.CharField(max_length=30)
+    text = models.CharField()
+
+
+class Video:
+    videoLink = models.CharField()
+    thumbLink = models.CharField()
+    type = models.CharField(max_length=30)
+
+
+class Course:
+    title = models.CharField()
+    outcome = models.CharField()
+    requirement = models.CharField()
+    description = models.CharField()
+    ratings = []

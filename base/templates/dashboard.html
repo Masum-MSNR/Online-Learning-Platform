@@ -4,7 +4,7 @@
 
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'index_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'dashboard_style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
@@ -15,7 +15,56 @@
 {% block content %}
 
 <section>
-    <p>Dashboard</p>
+    <h1>Welcome, {{user.username}}</h1>
+    <img class="profile_pic" height="55px" width="55px"
+        src="https://www.unitedway.ca/wp-content/uploads/2017/06/TempProfile.jpg">
+    {% if user.account_type == "Student" %}
+
+    <div class="block">
+        <p>Courses you taken:</p>
+    </div>
+    <div class="block">
+        <p>Progress on each course:</p>
+        <h3>Title</h3>
+        <div class="fixed_progress">
+            <div class="progress"></div>
+        </div>
+    </div>
+    {% else %}
+
+    <div class="block">
+        <h2>Courses you published: </h2>
+        <div class="button">Add New</div>
+        <div class="grid_container">
+            {% for x in 6|times %}
+            <div class="card">
+                <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" width="100%"
+                    height="160px" />
+                <h3 class="content_title">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe, nisi.</p>
+                </h3>
+                <div class="rating">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span>(343)</span>
+                </div>
+                <div class="date">
+                    <h4>
+                        <p>Feb, 24 2022</p>
+                    </h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2>Statistics:</h2>
+
+        
+    </div>
+    {% endif%}
 </section>
 
 {% endblock %}

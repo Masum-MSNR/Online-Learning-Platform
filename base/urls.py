@@ -10,4 +10,5 @@ urlpatterns = [
     path("categories", views.categories),
     path("cart", views.cart),
     path("verify/<str:token>", views.verify),
+    path("view_course", views.view_course),
 ]

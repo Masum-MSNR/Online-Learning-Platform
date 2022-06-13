@@ -92,7 +92,7 @@ def dashboard(request):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
-        context = {'login': True}
+        context = {'login': True,'user':user}
     return render(request, 'dashboard.html', context)
 
 
@@ -115,3 +115,10 @@ def verify(request, token):
         messages.info(request, "Successfully Verified.")
 
     return redirect('/login')
+
+def view_course(request):
+    context = {'login': False}
+    user = request.user
+    if user.is_authenticated:
+        context = {'login': True}
+    return render(request, 'view_course.html', context)

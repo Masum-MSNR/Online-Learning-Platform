@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'add_course_style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block title %}New Course{% endblock %}
+{% block Login %}{% if login %}inactive{% endif %}{% endblock %}
+{% block Signup %}{% if login %}inactive{% endif %}{% endblock %}
+{% block Logout %}{% if not login %}inactive{% endif %}{% endblock %}
+{% block Dashboard %}{% if not login %}inactive{% endif %}{% endblock %}
+
+{% block content %}
+
+<section>
+    <div class="block">
+        <p>Category</p>
+        <p>Title</p>
+        <P>Publiher</P>
+    </div>
+
+    <br><br>
+
+    <p>What you'll learn</p><br>
+    <p>Requirement</p><br>
+    <p>Description</p><br>
+    <p>Lessons</p>
+
+</section>
+
+{% endblock %}

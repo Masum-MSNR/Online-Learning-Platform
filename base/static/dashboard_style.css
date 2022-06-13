@@ -1,0 +1,65 @@
+:root {
+    --main_color: #34495E;
+}
+
+section {
+    padding: 20px 25px;
+}
+
+
+h1 {
+    display: inline;
+    font-size: 45px;
+}
+
+h2 {
+    display: inline-block;
+    margin: 10px 0px 20px 0px;
+}
+
+.profile_pic {
+    float: right;
+    border-color: aliceblue;
+    border-radius: 50%;
+}
+
+.block {
+    margin: 20px 0px 20px 0px;
+    display: block;
+}
+
+.grid_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 2em;
+    row-gap: 1em;
+}
+
+.button {
+    color: white;
+    float: right;
+    margin-top: 10px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: var(--main_color);
+    padding: 7px 10px 7px 10px;
+}
+
+.fixed_progress {
+    margin: 5px 0px 5px 0px;
+    border: 2px;
+    border-color: #34495E;
+    padding: 2px;
+    border-radius: 6px;
+    background: black;
+}
+
+.progress {
+    width: 30%;
+    background: white;
+    padding: 5px 0px 5px 0px;
+
+    border: 0px;
+    border-color: #34495E;
+    border-radius: 5px;
+}
