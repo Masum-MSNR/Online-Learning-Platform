@@ -11,4 +11,5 @@ urlpatterns = [
     path("cart", views.cart),
     path("verify/<str:token>", views.verify),
     path("view_course", views.view_course),
+    path("add_course", views.add_course),
 ]

@@ -1,3 +1,72 @@
 section {
-    padding: 20px 25px;
+    overflow: auto;
+    background: white;
+    margin: 20px 0px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
+
+}
+
+.block-body label {
+    display: block;
+    margin: 5px 0 5px 0;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.block-header {
+    font-weight: bold;
+    font-size: 35px;
+    border-radius: 10px 10px 0 0;
+    background: white;
+    text-align: center;
+    display: block;
+    height: 80px;
+    line-height: 80px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+}
+
+.block-body {
+    padding: 10px 20px;
+}
+
+.errorlist{
+    display: none!important;
+}
+
+.error-block{
+    background: red;
+    margin: 20px 0 0 0;
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
+}
+
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date] {
+    height: 100%;
+    border: 1px solid gray;
+    outline: none;
+    padding: 7px;
+    color: #000;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+input[type=submit] {
+    margin: 10px 0 20px 0;
+    float: right;
+    overflow: visible;
+    background: #000;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
 }

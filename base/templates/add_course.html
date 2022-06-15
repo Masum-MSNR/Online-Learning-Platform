@@ -17,19 +17,17 @@
 {% block content %}
 
 <section>
-    <div class="block">
-        <p>Category</p>
-        <p>Title</p>
-        <P>Publiher</P>
-    </div>
+    <div class="block-header">Add new course</div>
+    <form method="post">
+        <div class="block-body">
+            {% csrf_token %}
+            {{ form }}
 
-    <br><br>
+            <button id="add-another">add another</button>
 
-    <p>What you'll learn</p><br>
-    <p>Requirement</p><br>
-    <p>Description</p><br>
-    <p>Lessons</p>
-
+            <!-- <input type="submit" value="Add" id="submit"> -->
+        </div>
+    </form>
 </section>
 
 {% endblock %}

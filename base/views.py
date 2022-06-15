@@ -6,7 +6,7 @@ import django
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, hashers, logout as auth_logout
-from base.forms import LogInForm, SignUpForm
+from base.forms import CourseForm, LogInForm, SignUpForm
 from base.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -92,7 +92,7 @@ def dashboard(request):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
-        context = {'login': True,'user':user}
+        context = {'login': True, 'user': user}
     return render(request, 'dashboard.html', context)
 
 
@@ -106,7 +106,7 @@ def cart(request):
 
 def verify(request, token):
     user = User.objects.filter(token=token)[0]
-    
+
     if user.is_verified:
         messages.info(request, "Already verified.")
     else:
@@ -116,9 +116,22 @@ def verify(request, token):
 
     return redirect('/login')
 
+
 def view_course(request):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
         context = {'login': True}
     return render(request, 'view_course.html', context)
+
+
+
+def add_course(request):
+    context = {'login': False}
+    user = request.user
+    if user.is_authenticated:
+        form=CourseForm(request.POST,request.POST)
+        context = {'login': True,'form':form}
+    else:
+        return redirect('/login')
+    return render(request, 'add_course.html', context)

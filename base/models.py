@@ -78,15 +78,15 @@ class Comment:
     text = models.CharField()
 
 
-class Video:
-    videoLink = models.CharField()
-    thumbLink = models.CharField()
+class Video(models.Field):
+    videoLink = models.TextField()
+    thumbLink = models.TextField()
     type = models.CharField(max_length=30)
 
+class Course(models.Model):
+    title = models.CharField(max_length=255)
+    outcome = models.TextField()
+    requirement = models.TextField()
+    description = models.TextField()
+    
 
-class Course:
-    title = models.CharField()
-    outcome = models.CharField()
-    requirement = models.CharField()
-    description = models.CharField()
-    ratings = []
