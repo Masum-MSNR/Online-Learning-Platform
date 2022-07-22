@@ -79,9 +79,9 @@ DATABASES = {
         'ENGINE': 'djongo',
         'NAME': 'onlinelearning',
         'CLIENT': {
-            'host': 'mongodb+srv://masum:masum@cluster0.9cl0s.mongodb.net/test',
-            'username': 'masum',
-            'password': 'masum'
+            'host': 'mongodb://localhost:27017',
+            # 'username': 'masum',
+            # 'password': 'masum'
         }
     }
     # 'default': {
@@ -123,8 +123,13 @@ STATIC_URL = 'base/static/'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_files/')
 
+MEDIA_URL='/media/'
+MEDIA_ROOT=(
+    os.path.join(BASE_DIR,'media')
+)
+
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'base/static/')
+    os.path.join(BASE_DIR, 'base/static/'),
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

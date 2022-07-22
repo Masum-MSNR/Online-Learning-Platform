@@ -1,6 +1,7 @@
 from asyncio.format_helpers import extract_stack
 import email
 from enum import unique
+from turtle import onclick
 from bson import is_valid
 from django import forms
 from django.contrib.auth import authenticate
@@ -46,13 +47,21 @@ class LogInForm(forms.ModelForm):
 
 class CourseForm(forms.ModelForm):
     title = forms.CharField(max_length=500)
+    types = [('Free', 'Free'), ('Paid', 'Paid')]
+    course_type = forms.ChoiceField(choices=types, widget = forms.RadioSelect(attrs = {
+            'onclick' : "btnSearch_Click()",
+            }))
 
     class Meta:
         model = Course
-        fields = ['title', 'outcome', 'requirement', 'description']
+        fields = ['coverImage','title', 'outcome', 'requirement', 'description','course_type','fee']
         widgets = {
-            'outcome': forms.Textarea(attrs={'rows': 5, 'cols': 100}),
-            'requirement': forms.Textarea(attrs={'rows': 5, 'cols': 100}),
-            'description': forms.Textarea(attrs={'rows': 5, 'cols': 100}),
+            'outcome': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
+            'requirement': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
+            'description': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
         }
+
+        
+class TempForm(forms.Form):
+    test =forms.CharField(max_length=20)
 

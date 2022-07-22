@@ -1,9 +1,13 @@
+from cProfile import label
 import imp
+from itertools import tee
+from pyexpat import model
 from statistics import mode
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth import hashers
 from django import forms
+from pkg_resources import require
 
 
 class MyUserManager(BaseUserManager):
@@ -83,10 +87,12 @@ class Video(models.Field):
     thumbLink = models.TextField()
     type = models.CharField(max_length=30)
 
+
 class Course(models.Model):
+    coverImage = models.ImageField(blank=True, null=True,upload_to="images/")
     title = models.CharField(max_length=255)
     outcome = models.TextField()
     requirement = models.TextField()
     description = models.TextField()
-    
-
+    course_type=models.CharField(max_length=30, default='Free')
+    fee=models.IntegerField(blank=True,null=True,default=0)

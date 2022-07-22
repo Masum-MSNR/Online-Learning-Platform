@@ -20,6 +20,8 @@ section {
     line-clamp: 2;
     -webkit-box-orient: vertical;
     padding: 2px 3px;
+    line-height:1.5em;
+    min-height:3em;
 }
 
 .rating {
@@ -31,6 +33,16 @@ section {
     float: right;
 }
 
+
+
+.card{
+    padding: 10px;
+    overflow: auto;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
+}
 
 
 @media (min-width: 576px) {

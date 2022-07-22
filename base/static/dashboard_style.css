@@ -43,6 +43,7 @@ h2 {
     border-radius: 10px;
     background-color: var(--main_color);
     padding: 7px 10px 7px 10px;
+    text-decoration: none;
 }
 
 .fixed_progress {
@@ -62,4 +63,13 @@ h2 {
     border: 0px;
     border-color: #34495E;
     border-radius: 5px;
+}
+
+.card{
+    padding: 10px;
+    overflow: auto;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
 }

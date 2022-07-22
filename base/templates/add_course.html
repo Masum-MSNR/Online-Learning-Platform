@@ -18,16 +18,27 @@
 
 <section>
     <div class="block-header">Add new course</div>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="block-body">
             {% csrf_token %}
             {{ form }}
-
-            <button id="add-another">add another</button>
-
-            <!-- <input type="submit" value="Add" id="submit"> -->
+            <div class="signup-wrapper"><input type="submit" value="Add" id="submit"></div>
         </div>
     </form>
 </section>
+
+<script>
+    function btnSearch_Click() {
+         var radio1=[document.getElementById("id_course_type_0")].some(c=>c.checked);
+         var radio2=[document.getElementById("id_course_type_1")].some(c=>c.checked);
+         if(radio1){
+            document.getElementById("id_fee").style.display='none';
+            document.querySelector('label[for="id_fee"]').style.display='none';
+         }else if(radio2){
+            document.getElementById("id_fee").style.display='block';
+            document.querySelector('label[for="id_fee"]').style.display='block';
+         }
+       }
+</script>
 
 {% endblock %}

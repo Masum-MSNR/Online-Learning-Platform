@@ -18,24 +18,22 @@
 <section>
     <h2><i class="fa-solid fa-angles-right"></i> Latest Published</h2>
     <div class="grid_container">
-        {% for x in 6|times %}
+        {% for course in courses %}
         <div class="card">
-            <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" width="100%"
+            <img src="/media/images/{{course.imageUrl}}" width="100%"
                 height="160px" />
             <h3 class="content_title">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe, nisi.</p>
+                <p>{{ course.title }}</p>
             </h3>
             <div class="rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
+                {% for x in 5|times %}
                 <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span>(343)</span>
+                {% endfor %}
+                <span>( {{ course.rating }} )</span>
             </div>
             <div class="date">
                 <h4>
-                    <p>Feb, 24 2022</p>
+                    <p>{{ course.uploadDate }}</p>
                 </h4>
             </div>
         </div>
