@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'edit_course_style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+{% block Login %}inactive{% endblock %}
+{% block Signup %}inactive{% endblock %}
+{% block content %}
+
+<section>
+    <h2><i class="fa-solid fa-angles-right"></i> Videos</h2>
+    {% for video in course.videos.values %}
+    <div class="card">
+        <p class="title">{{video.title}}</p>
+        <p class="min">{{video.duration}}</p>
+    </div>
+    {% endfor %}
+
+    <button id="add-video-bt" class="button" onclick="onClick()">Add New Video</button>
+
+    <div class="add-video-block" id="video-block">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Add" id="submit">
+        </form>
+    </div>
+
+</section>
+
+<script>
+    function onClick() {
+        document.getElementById("video-block").style.display='block';
+        document.getElementById("add-video-bt").style.display='none';
+    }
+</script>
+
+{% endblock %}

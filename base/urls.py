@@ -1,5 +1,3 @@
-import imp
-import django
 from django.urls import path
 from . import views
 from django.conf import settings
@@ -16,4 +14,5 @@ urlpatterns = [
     path("verify/<str:token>", views.verify),
     path("view_course", views.view_course),
     path("add_course", views.add_course),
+    path("edit_course/<str:id>", views.edit_course),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

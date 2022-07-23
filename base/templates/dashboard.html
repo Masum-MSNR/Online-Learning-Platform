@@ -38,8 +38,9 @@
         <div class="grid_container">
             {% for course in courses %}
             <div class="card">
-                <img src="/media/images/{{course.imageUrl}}" width="100%"
-                    height="160px" />
+                <a href="/edit_course/{{ course.id }}">
+                    <img src="/media/images/{{course.imageUrl}}" width="100%" height="160px" />
+                </a>
                 <h3 class="content_title">
                     <p>{{ course.title }}</p>
                 </h3>
@@ -62,7 +63,7 @@
 
         <!-- <h2>Statistics:</h2> -->
 
-        
+
     </div>
     {% endif%}
 </section>

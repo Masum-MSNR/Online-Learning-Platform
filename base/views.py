@@ -1,6 +1,7 @@
 
 from datetime import date
 from email import message
+import json
 from math import fabs
 import os
 import random
@@ -9,8 +10,8 @@ import django
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, hashers, logout as auth_logout
-from base.forms import CourseForm, LogInForm, SignUpForm, TempForm
-from base.models import User
+from base.forms import CourseForm, LogInForm, SignUpForm, TempForm, VideoForm
+from base.models import User, Video
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.conf import settings
@@ -146,9 +147,10 @@ def add_course(request):
             fs = FileSystemStorage(location='media/images/')
 
             modified_name = ''.join(random.choices(
-                string.ascii_uppercase + string.digits, k=20))+os.path.splitext(str(request.FILES['coverImage']))[1]
+                string.ascii_uppercase + string.digits, k=20))
+            ext = os.path.splitext(str(request.FILES['coverImage']))[1]
 
-            fs.save(modified_name, image)
+            fs.save(modified_name+ext, image)
 
             fee = 0
             course_type = form.cleaned_data['course_type']
@@ -156,7 +158,8 @@ def add_course(request):
                 fee = form.cleaned_data['fee']
 
             course = {
-                'imageUrl': modified_name,
+                'id': modified_name,
+                'imageUrl': modified_name+ext,
                 'user': request.user.username,
                 'title': form.cleaned_data['title'],
                 'outcome': form.cleaned_data['outcome'],
@@ -165,7 +168,9 @@ def add_course(request):
                 'rating': 0,
                 'uploadDate': f'{date.today():%b, %d %Y}',
                 'course_type': course_type,
-                'fee': fee
+                'fee': fee,
+                'videoCount':0,
+                'videos':{}
             }
             db.courses.insert(course)
             return redirect('/dashboard')
@@ -179,9 +184,43 @@ def add_course(request):
     return render(request, 'add_course.html', context)
 
 
-def handle_uploaded_file(file, filename):
-    if not os.path.exists('media/images/'):
-        os.mkdir('media/images/')
-    with open('media/images/' + filename, 'wb+') as destination:
-        for chunk in file.chunks():
-            destination.write(chunk)
+def edit_course(request, id):
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            video = request.FILES['video_file']
+            fs = FileSystemStorage(location='media/videos/')
+
+            modified_name = ''.join(random.choices(
+                string.ascii_uppercase + string.digits, k=20))
+            ext = os.path.splitext(str(request.FILES['video_file']))[1]
+
+            fs.save(modified_name+ext, video)
+
+            result = db.courses.find({'id': id}).next()
+            count=result['videoCount']
+            count+=1
+            videoFile = {f'{count}': {
+                'id': modified_name,
+                'title': form.cleaned_data['title'],
+                'duration': 0.0
+            }}
+
+            result = db.courses.find({'id': id}).next()
+
+            rj = result['videos']
+            rj.update(videoFile)
+
+            filter={'id':id}
+            nol={'$set':{'videos':rj,'videoCount':count}}
+            db.courses.update_one(filter,nol)
+
+    context = {'login': False}
+    user = request.user
+    if user.is_authenticated:
+        result = db.courses.find({'id': id}).next()
+        form = VideoForm()
+        context = {'login': True, 'user': user, 'course': result, 'form': form}
+    else:
+        return redirect('/login')
+    return render(request, 'edit_course.html', context)

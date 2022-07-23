@@ -3,11 +3,14 @@ import imp
 from itertools import tee
 from pyexpat import model
 from statistics import mode
+from turtle import title
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.contrib.auth import hashers
 from django import forms
 from pkg_resources import require
+from django.core.validators import FileExtensionValidator
+
 
 
 class MyUserManager(BaseUserManager):
@@ -82,17 +85,17 @@ class Comment:
     text = models.CharField()
 
 
-class Video(models.Field):
-    videoLink = models.TextField()
-    thumbLink = models.TextField()
-    type = models.CharField(max_length=30)
-
-
 class Course(models.Model):
-    coverImage = models.ImageField(blank=True, null=True,upload_to="images/")
+    coverImage = models.ImageField(blank=True, null=True, upload_to="images/")
     title = models.CharField(max_length=255)
     outcome = models.TextField()
     requirement = models.TextField()
     description = models.TextField()
-    course_type=models.CharField(max_length=30, default='Free')
-    fee=models.IntegerField(blank=True,null=True,default=0)
+    course_type = models.CharField(max_length=30, default='Free')
+    fee = models.IntegerField(blank=True, null=True, default=0)
+
+
+class Video(models.Model):
+
+    video_file = models.FileField(upload_to="videos/")
+    title= models.CharField(max_length=255)

@@ -5,7 +5,7 @@ from turtle import onclick
 from bson import is_valid
 from django import forms
 from django.contrib.auth import authenticate
-from base.models import Course, User
+from base.models import Course, User, Video
 
 
 class DateInput(forms.DateInput):
@@ -48,20 +48,30 @@ class LogInForm(forms.ModelForm):
 class CourseForm(forms.ModelForm):
     title = forms.CharField(max_length=500)
     types = [('Free', 'Free'), ('Paid', 'Paid')]
-    course_type = forms.ChoiceField(choices=types, widget = forms.RadioSelect(attrs = {
-            'onclick' : "btnSearch_Click()",
-            }))
+    course_type = forms.ChoiceField(choices=types, widget=forms.RadioSelect(attrs={
+        'onclick': "btnSearch_Click()",
+    }))
 
     class Meta:
         model = Course
-        fields = ['coverImage','title', 'outcome', 'requirement', 'description','course_type','fee']
+        fields = ['coverImage', 'title', 'outcome',
+                  'requirement', 'description', 'course_type', 'fee']
         widgets = {
             'outcome': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
             'requirement': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
             'description': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
         }
 
-        
-class TempForm(forms.Form):
-    test =forms.CharField(max_length=20)
 
+class VideoForm(forms.ModelForm):
+
+    video_file=forms.FileField(widget=forms.FileInput(attrs={'accept':'video/*'}))
+
+    class Meta:
+        model = Video
+        fields=['title','video_file']
+        
+
+
+class TempForm(forms.Form):
+    test = forms.CharField(max_length=20)
