@@ -1,12 +1,11 @@
 
 from datetime import date
 from email import message
-import json
+import imp
 from math import fabs
 import os
 import random
 from datetime import datetime
-import django
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, hashers, logout as auth_logout
@@ -17,16 +16,17 @@ from django.core.mail import send_mail
 from django.conf import settings
 import requests
 from pymongo import MongoClient
+import pymongo
 from django.core.files.storage import FileSystemStorage
 import string
-
+import cv2
 
 client = MongoClient('mongodb://localhost:27017')
 db = client.onlinelearning
 
 
 def index(request):
-    result = db.courses.find({}).limit(6)
+    result = db.courses.find({}).sort('time', pymongo.DESCENDING).limit(3)
     context = {'login': False, 'courses': result}
     user = request.user
     if user.is_authenticated:
@@ -131,11 +131,14 @@ def verify(request, token):
     return redirect('/login')
 
 
-def view_course(request):
+def view_course(request, id):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
-        context = {'login': True}
+
+        result = db.courses.find({'id': id}).next()
+
+        context = {'login': True, 'id': id, 'course': result}
     return render(request, 'view_course.html', context)
 
 
@@ -143,6 +146,7 @@ def add_course(request):
     if request.method == 'POST':
         form = CourseForm(request.POST, request.FILES)
         if form.is_valid():
+            # form.save()
             image = request.FILES['coverImage']
             fs = FileSystemStorage(location='media/images/')
 
@@ -159,6 +163,7 @@ def add_course(request):
 
             course = {
                 'id': modified_name,
+                'category': form.cleaned_data['category'],
                 'imageUrl': modified_name+ext,
                 'user': request.user.username,
                 'title': form.cleaned_data['title'],
@@ -166,11 +171,13 @@ def add_course(request):
                 'requirement': form.cleaned_data['requirement'],
                 'description': form.cleaned_data['description'],
                 'rating': 0,
-                'uploadDate': f'{date.today():%b, %d %Y}',
+                'numberOfRating': 0,
+                'uploadDate': f'{date.today():%b %d, %Y}',
+                'time': datetime.utcnow(),
                 'course_type': course_type,
                 'fee': fee,
-                'videoCount':0,
-                'videos':{}
+                'videoCount': 0,
+                'videos': {}
             }
             db.courses.insert(course)
             return redirect('/dashboard')
@@ -197,13 +204,23 @@ def edit_course(request, id):
 
             fs.save(modified_name+ext, video)
 
+            video = cv2.VideoCapture("media/videos/"+modified_name+ext)
+
+            frame_rate = video.get(cv2.CAP_PROP_FPS)
+
+            total_num_frames = video.get(cv2.CAP_PROP_FRAME_COUNT)
+
+            duration = total_num_frames / frame_rate
+
             result = db.courses.find({'id': id}).next()
-            count=result['videoCount']
-            count+=1
+            count = result['videoCount']
+            count += 1
             videoFile = {f'{count}': {
                 'id': modified_name,
+                's_id': count,
+                'extension': ext,
                 'title': form.cleaned_data['title'],
-                'duration': 0.0
+                'duration': time_format(duration)
             }}
 
             result = db.courses.find({'id': id}).next()
@@ -211,16 +228,34 @@ def edit_course(request, id):
             rj = result['videos']
             rj.update(videoFile)
 
-            filter={'id':id}
-            nol={'$set':{'videos':rj,'videoCount':count}}
-            db.courses.update_one(filter,nol)
+            filter = {'id': id}
+            nol = {'$set': {'videos': rj, 'videoCount': count}}
+            db.courses.update_one(filter, nol)
 
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
         result = db.courses.find({'id': id}).next()
         form = VideoForm()
-        context = {'login': True, 'user': user, 'course': result, 'form': form}
+        context = {
+            'login': True,
+            'user': user,
+            'course': result,
+            'form': form,
+            'id': id
+        }
     else:
         return redirect('/login')
     return render(request, 'edit_course.html', context)
+
+
+def time_format(seconds: int):
+    if seconds is not None:
+        seconds = int(seconds)
+        h = seconds // 3600 % 24
+        m = seconds % 3600 // 60
+        s = seconds % 3600 % 60
+        if h > 0:
+            return '{:02d}:{:02d}:{:02d}s'.format(h, m, s)
+        else:
+            return '{:02d}:{:02d}'.format(m, s)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User
+from .models import Course, User
 
 class UserAdmin(admin.ModelAdmin):
     list_display=('email', 'username','is_admin','date_joined','last_login')
@@ -7,3 +7,4 @@ class UserAdmin(admin.ModelAdmin):
     readonly_fields=('id','date_joined','last_login')
 
 admin.site.register(User,UserAdmin)
+admin.site.register(Course)

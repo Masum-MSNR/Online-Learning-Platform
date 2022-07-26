@@ -6,7 +6,7 @@ section {
     padding: 20px 25px;
 }
 
-.card{
+.card {
     padding: 10px;
     overflow: auto;
     background: white;
@@ -16,7 +16,7 @@ section {
     margin-bottom: 10px;
 }
 
-.title{
+.title {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -28,13 +28,13 @@ section {
     font-weight: bold;
 }
 
-.min{
+.min {
     padding: 0px 5px;
 }
 
 h2 {
     display: inline-block;
-    margin: 10px 0px 20px 0px;
+    margin: 10px 0px 10px 0px;
 }
 
 .button {
@@ -46,9 +46,14 @@ h2 {
     background-color: var(--main_color);
     padding: 7px 10px;
     text-decoration: none;
+    font-weight: bold;
 }
 
-.add-video-block{
+:hover.button{
+    cursor: pointer;
+}
+
+.add-video-block {
     display: none;
     margin: 15px 0px;
 }
@@ -70,4 +75,17 @@ input[type=submit] {
     color: white;
     padding: 10px 20px;
     border-radius: 10px;
+}
+
+.s-title {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.value {
+    font-size: 17px;
+}
+
+.e-margin{
+    margin-bottom: 5px;
 }

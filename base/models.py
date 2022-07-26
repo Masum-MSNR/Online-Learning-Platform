@@ -86,6 +86,7 @@ class Comment:
 
 
 class Course(models.Model):
+    category= models.CharField(max_length=50,default="Random")
     coverImage = models.ImageField(blank=True, null=True, upload_to="images/")
     title = models.CharField(max_length=255)
     outcome = models.TextField()
@@ -96,6 +97,5 @@ class Course(models.Model):
 
 
 class Video(models.Model):
-
     video_file = models.FileField(upload_to="videos/")
     title= models.CharField(max_length=255)

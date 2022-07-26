@@ -20,16 +20,18 @@
     <div class="grid_container">
         {% for course in courses %}
         <div class="card">
-            <img src="/media/images/{{course.imageUrl}}" width="100%"
-                height="160px" />
+            <a href="/view_course/{{ course.id }}">
+                <img src="/media/images/{{course.imageUrl}}" width="100%" height="160px" />
+            </a>
             <h3 class="content_title">
                 <p>{{ course.title }}</p>
             </h3>
             <div class="rating">
+                <span>{{ course.rating }} </span>
                 {% for x in 5|times %}
                 <span class="fa fa-star"></span>
                 {% endfor %}
-                <span>( {{ course.rating }} )</span>
+                <span>( {{ course.numberOfRating }} )</span>
             </div>
             <div class="date">
                 <h4>

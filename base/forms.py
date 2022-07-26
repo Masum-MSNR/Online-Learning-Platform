@@ -48,13 +48,29 @@ class LogInForm(forms.ModelForm):
 class CourseForm(forms.ModelForm):
     title = forms.CharField(max_length=500)
     types = [('Free', 'Free'), ('Paid', 'Paid')]
+    categories = [
+        ('Academics', 'Academics'),
+        ('Business', 'Business'),
+        ('Design', 'Design'),
+        ('Development', 'Development'),
+        ('Health & Fitness', 'Health & Fitness'),
+        ('IT & Software', 'IT & Software'),
+        ('Language', 'Language'),
+        ('Lifestyle', 'Lifestyle'),
+        ('Marketing', 'Marketing'),
+        ('Music', 'Music'),
+        ('Office Productivity', 'Office Productivity'),
+        ('Personal Development', 'Personal Development'),
+        ('Photography', 'Photography')
+        ]
+    category = forms.ChoiceField(choices = categories)
     course_type = forms.ChoiceField(choices=types, widget=forms.RadioSelect(attrs={
         'onclick': "btnSearch_Click()",
     }))
 
     class Meta:
         model = Course
-        fields = ['coverImage', 'title', 'outcome',
+        fields = ['category','coverImage', 'title', 'outcome',
                   'requirement', 'description', 'course_type', 'fee']
         widgets = {
             'outcome': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
@@ -65,12 +81,12 @@ class CourseForm(forms.ModelForm):
 
 class VideoForm(forms.ModelForm):
 
-    video_file=forms.FileField(widget=forms.FileInput(attrs={'accept':'video/*'}))
+    video_file = forms.FileField(
+        widget=forms.FileInput(attrs={'accept': 'video/*'}))
 
     class Meta:
         model = Video
-        fields=['title','video_file']
-        
+        fields = ['title', 'video_file']
 
 
 class TempForm(forms.Form):

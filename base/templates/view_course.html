@@ -18,17 +18,31 @@
 
 <section>
     <div class="block">
-        <p>Category</p>
-        <p>Title</p>
-        <P>Publiher</P>
+        <p class="category">{{course.category}}</p>
+        {% if course.fee == 0 %}
+        <p class="price">Free</p>
+        {% else %}
+        <p class="price">${{course.fee}}</p>
+        {% endif %}
+        <p class="title">{{course.title}}</p>
+        <p class="button">Add To Cart</p>
+        <P class="s-title">by <b>{{course.user}}</b> -- on <b>{{course.uploadDate}}</b></P>
     </div>
 
-    <br><br>
+    <br>
+    <img src="/media/images/{{course.imageUrl}}" class="center" />
+    <br>
 
-    <p>What you'll learn</p><br>
-    <p>Requirement</p><br>
-    <p>Description</p><br>
-    <p>Lessons</p>
+    <p class="title">What you'll learn</p>
+    <p>{{course.outcome}}</p><br>
+    <p class="title">Requirements</p>
+    <p>{{course.requirement}}</p><br>
+    <p class="title">Description</p>
+    <p>{{course.description}}</p><br>
+    <p class="title">Reviews</p><br>
+    <div class="block">
+
+    </div>
 
 </section>
 

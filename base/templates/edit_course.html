@@ -14,15 +14,42 @@
 {% block content %}
 
 <section>
+    <h2><i class="fa-solid fa-angles-right"></i> Details</h2>
+    <a class="button" href="/edit_course_details/{{id}}">Edit Details</a>
+    {% if course.fee == 0 %}
+    <p class="e-margin">
+        <span class="s-title">Course Fee:</span>
+        <span class="value"> Free</span>
+    </p>
+    {% else %}
+    <p class="e-margin">
+        <span class="s-title">Course Fee:</span>
+        <span class="value"> {{course.fee}}</span>
+    </p>
+    {% endif %}
+
+    <p class="e-margin">
+        <span class="s-title">Title:</span>
+        <span class="value"> {{course.title}}</span>
+    </p>
+    <p class="e-margin">
+        <span class="s-title">Rating:</span>
+        <span class="value"> {{course.rating}}</span>
+        <span class="value"> ({{course.numberOfRating}})</span>
+    </p>
+    <p class="e-margin">
+        <span class="s-title">Date of creation:</span>
+        <span class="value">{{course.uploadDate}}</span>
+    </p>
     <h2><i class="fa-solid fa-angles-right"></i> Videos</h2>
     {% for video in course.videos.values %}
     <div class="card">
-        <p class="title">{{video.title}}</p>
+        <p class="title">{{video.s_id}}. {{video.title}}</p>
         <p class="min">{{video.duration}}</p>
     </div>
     {% endfor %}
 
-    <button id="add-video-bt" class="button" onclick="onClick()">Add New Video</button>
+    <button id="add-video-bt" class="button" onclick="onAddVideoClick()">Add New Video</button>
 
     <div class="add-video-block" id="video-block">
         <form method="post" enctype="multipart/form-data">
@@ -35,9 +62,13 @@
 </section>
 
 <script>
-    function onClick() {
-        document.getElementById("video-block").style.display='block';
-        document.getElementById("add-video-bt").style.display='none';
+    function onAddVideoClick() {
+        document.getElementById("video-block").style.display = 'block';
+        document.getElementById("add-video-bt").style.display = 'none';
+    }
+
+    function onEditClick(){
+        alert("The URL of this page is: " + window.location.href);
     }
 </script>
 

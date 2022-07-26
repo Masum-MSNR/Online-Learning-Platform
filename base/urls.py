@@ -12,7 +12,7 @@ urlpatterns = [
     path("categories", views.categories),
     path("cart", views.cart),
     path("verify/<str:token>", views.verify),
-    path("view_course", views.view_course),
+    path("view_course/<str:id>", views.view_course),
     path("add_course", views.add_course),
     path("edit_course/<str:id>", views.edit_course),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
