@@ -6,10 +6,10 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    list-style: none;
 }
 
 .container {
+    margin-top: 80px;
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
@@ -42,7 +42,7 @@
 }
 
 body {
-    font-family: monospace;
+    font-family: Calibri;
 }
 
 nav {
@@ -50,6 +50,11 @@ nav {
     height: 80px;
     width: 100%;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 label.logo {
@@ -59,6 +64,11 @@ label.logo {
     padding: 0 25px;
     font-weight: bold;
     display: inline;
+}
+
+label a{
+    color: var(--main_color);
+    text-decoration: none;
 }
 
 nav ul {
@@ -102,14 +112,14 @@ nav ul li a {
     text-decoration: none;
 }
 
-li.active,
-li:hover {
+nav ul li.active,
+nav ul li:hover {
     color: var(--main_color);
     font-weight: bold;
     transition: .5s;
 }
 
-li.inactive {
+nav ul li.inactive {
     display: none;
     padding: 0;
     margin: 0;
@@ -130,7 +140,7 @@ li.inactive {
     display: none;
 }
 
-nav .search-icon{
+nav .search-icon {
     display: none;
 }
 
@@ -154,6 +164,77 @@ nav ul .search-box {
     border-radius: 5px;
 }
 
+.badge {
+    padding-left: 9px;
+    padding-right: 9px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+}
+
+.label-warning[href],
+.badge-warning[href] {
+    background-color: #c67605;
+}
+
+#lblCartCount {
+    font-size: 12px;
+    background: var(--main_color);
+    color: #fff;
+    padding: 3px 5px;
+    vertical-align: top;
+    margin-left: -3px;
+}
+
+
+.content_title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    font-size: 17px;
+    -webkit-box-orient: vertical;
+    padding: 2px 3px;
+    line-height:1.5em;
+    min-height:3em;
+}
+
+.rating {
+    padding: 2px 3px;
+}
+
+.date {
+    padding-bottom: 5px;
+    float: right;
+}
+
+.price {
+    text-decoration: none;
+    font-size: 17px;
+    padding: 5px 10px;
+    background: white;
+    font-weight: bold;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    border-radius: 0px 0px 0px 10px;
+}
+
+.card{
+    display: block;
+    overflow: auto;
+    margin: 20px 0;
+    overflow: auto;
+    background: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .1);
+}
+
+.card-content{
+    padding: 0px 10px 0px 10px;
+}
 
 @media (max-width: 1070px) {
 
@@ -315,4 +396,9 @@ footer h4 {
     color: var(--main_color);
     padding: 10px 0 10px 0;
     text-align: center;
+}
+
+.content_title a{
+    text-decoration: none;
+    color: black;
 }

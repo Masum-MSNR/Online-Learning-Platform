@@ -30,7 +30,7 @@
       </label>
       <label class="search-icon"><i class="fa-solid fa-search"></i></label>
 
-      <label class="logo">Online Learning</label>
+      <label class="logo"><a href="/">Online Learning</a></label>
       <ul>
         <li>
           <input type="search" placeholder="Search" class="search-box">
@@ -41,8 +41,10 @@
         <li class="{% block Dashboard %} {% endblock %}"><a href="/dashboard">Dashboard</a></li>
         <li class="{% block Login %} {% endblock %}"><a href="/login">Log in</a></li>
         <li class="{% block Signup %} {% endblock %}"><a href="/signup">Sign up</a></li>
-        <li class="{% block Cart %} {% endblock %}"><a href="/cart" id="cart"><i
-              class="fa-solid fa-cart-arrow-down"></i></a>
+        <li class="{% block Cart %} {% endblock %}"><a href="/cart" id="cart">
+            <i class="fa-solid fa-cart-arrow-down"></i>
+            <span class='badge badge-warning' id='lblCartCount'> {{cart_count}} </span>
+          </a>
         </li>
         <li class="{% block Logout %} {% endblock %}"><a href="/logout" id="logout"><i
               class="fa-solid fa-arrow-right-from-bracket"></i></a>

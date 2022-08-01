@@ -55,6 +55,10 @@ section {
     font-weight: bold;
 }
 
-:hover.button{
+:hover.button {
     cursor: pointer;
+}
+
+li {
+    margin-bottom: 5px;
 }

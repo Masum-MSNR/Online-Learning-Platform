@@ -14,12 +14,12 @@ from base.models import User, Video
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.conf import settings
-import requests
 from pymongo import MongoClient
 import pymongo
 from django.core.files.storage import FileSystemStorage
 import string
 import cv2
+
 
 client = MongoClient('mongodb://localhost:27017')
 db = client.onlinelearning
@@ -30,7 +30,7 @@ def index(request):
     context = {'login': False, 'courses': result}
     user = request.user
     if user.is_authenticated:
-        context = {'login': True, 'courses': result}
+        context = {'login': True, 'courses': result,'cart_count':cart_counter(request)}
     return render(request, 'index.html', context)
 
 
@@ -97,7 +97,7 @@ def categories(request):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
-        context = {'login': True}
+        context = {'login': True,'cart_count':cart_counter(request)}
     return render(request, 'categories.html', context)
 
 
@@ -106,7 +106,7 @@ def dashboard(request):
     user = request.user
     if user.is_authenticated:
         result = db.courses.find({'user': user.username})
-        context = {'login': True, 'user': user, 'courses': result}
+        context = {'login': True, 'user': user, 'courses': result,'cart_count':cart_counter(request)}
     return render(request, 'dashboard.html', context)
 
 
@@ -114,7 +114,53 @@ def cart(request):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
-        context = {'login': True}
+        if request.method == 'POST':
+            if request.POST.get('delete') is not None:
+                data=request.POST.dict()
+                id=data.get('id')
+                res = db.cart.find({'user': user.username}).next()
+                rj = res['courses']
+                try:
+                    rj.pop(id)
+                except:
+                    print('Empty')
+
+                filter = {'user': user.username}
+                nol = {'$set': {'courses': rj}}
+                db.cart.update_one(filter, nol)
+            elif request.POST.get('confirm_parches') is not None:
+                count = db.student_course.find({'user': user.username}).count()
+                if count == 0:
+                    userCourse = {
+                        'user': user.username,
+                        'courses': {}
+                    }
+                    db.student_course.insert(userCourse)
+
+                res = db.student_course.find({'user': user.username}).next()
+                rj = res['courses']
+
+                result = db.cart.find({'user': user.username}).next()
+                for courseId in result['courses']:
+                    course=db.courses.find({'id':courseId}).next()
+                    courseData={
+                        course['id']:course['id']
+                    }
+                    rj.update(courseData)
+                filter = {'user': user.username}
+                nol = {'$set': {'courses': rj}}
+                db.student_course.update_one(filter, nol)
+                nol = {'$set': {'courses': {}}}
+                db.cart.update_one(filter, nol)
+
+        result = db.cart.find({'user': user.username}).next()
+        courses=[]
+        totalFee=0
+        for courseId in result['courses']:
+            course=db.courses.find({'id':courseId}).next()
+            totalFee+=course['fee']
+            courses.append(course)  
+    context = {'login': True, 'courses': courses,'total':totalFee,'cart_count':cart_counter(request)}
     return render(request, 'cart.html', context)
 
 
@@ -132,13 +178,33 @@ def verify(request, token):
 
 
 def view_course(request, id):
-    context = {'login': False}
+    result = db.courses.find({'id': id}).next()
+
     user = request.user
     if user.is_authenticated:
+        if request.POST.get('add_to_cart') is not None:
+            count = db.cart.find({'user': user.username}).count()
+            if count == 0:
+                userCart = {
+                    'user': user.username,
+                    'courses': {}
+                }
+                db.cart.insert(userCart)
+            course = {
+                id: id
+            }
+            res = db.cart.find({'user': user.username}).next()
+            rj = res['courses']
+            rj.update(course)
+            # rj.pop(id)
 
-        result = db.courses.find({'id': id}).next()
+            filter = {'user': user.username}
+            nol = {'$set': {'courses': rj}}
+            db.cart.update_one(filter, nol)
 
-        context = {'login': True, 'id': id, 'course': result}
+        context = {'login': True, 'id': id, 'course': result,'cart_count':cart_counter(request)}
+    else:
+        context = {'login': False, 'id': id, 'course': result,'cart_count':cart_counter(request)}
     return render(request, 'view_course.html', context)
 
 
@@ -185,7 +251,7 @@ def add_course(request):
     user = request.user
     if user.is_authenticated:
         form = CourseForm()
-        context = {'login': True, 'form': form}
+        context = {'login': True, 'form': form,'cart_count':cart_counter(request)}
     else:
         return redirect('/login')
     return render(request, 'add_course.html', context)
@@ -242,7 +308,8 @@ def edit_course(request, id):
             'user': user,
             'course': result,
             'form': form,
-            'id': id
+            'id': id,
+            'cart_count':cart_counter(request)
         }
     else:
         return redirect('/login')
@@ -259,3 +326,12 @@ def time_format(seconds: int):
             return '{:02d}:{:02d}:{:02d}s'.format(h, m, s)
         else:
             return '{:02d}:{:02d}'.format(m, s)
+
+def cart_counter(request):
+    user=request.user
+    if user.is_authenticated:
+        res=db.cart.find({'user':user.username}).next()
+        count=len(res['courses'])
+        return count
+    return 0   
+

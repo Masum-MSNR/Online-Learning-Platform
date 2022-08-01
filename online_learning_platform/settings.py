@@ -35,7 +35,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gdstorage',
     'fontawesomefree',
     'base.apps.BaseConfig'
 ]
@@ -123,9 +122,9 @@ STATIC_URL = 'base/static/'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_files/')
 
-MEDIA_URL='/media/'
-MEDIA_ROOT=(
-    os.path.join(BASE_DIR,'media')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = (
+    os.path.join(BASE_DIR, 'media')
 )
 
 STATICFILES_DIRS = [

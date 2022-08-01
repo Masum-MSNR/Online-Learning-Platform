@@ -3,6 +3,7 @@
 {% load my_filters %}
 
 
+
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'view_course_style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,6 +14,7 @@
 {% block Signup %}{% if login %}inactive{% endif %}{% endblock %}
 {% block Logout %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block Dashboard %}{% if not login %}inactive{% endif %}{% endblock %}
+{% block Cart %}{% if not login %}inactive{% endif %}{% endblock %}
 
 {% block content %}
 
@@ -25,7 +27,11 @@
         <p class="price">${{course.fee}}</p>
         {% endif %}
         <p class="title">{{course.title}}</p>
-        <p class="button">Add To Cart</p>
+        <form method="post">
+            {% csrf_token %}
+            <input type="submit" value="Add To Cart" name="add_to_cart" class="button" />
+        </form>
+        <!-- <p class="button" onclick="saveToLocal();">Add To Cart</p> -->
         <P class="s-title">by <b>{{course.user}}</b> -- on <b>{{course.uploadDate}}</b></P>
     </div>
 
@@ -34,16 +40,48 @@
     <br>
 
     <p class="title">What you'll learn</p>
-    <p>{{course.outcome}}</p><br>
+    <ul style="padding-left: 30px;">
+        {% with course.outcome|split:"." as outcomes %}
+        {% for outcome in outcomes %}
+        <li class="s-title">
+            <p>{{outcome}}.</p>
+        </li>
+        {% endfor %}
+        {% endwith %}
+    </ul>
     <p class="title">Requirements</p>
-    <p>{{course.requirement}}</p><br>
+    <ul style="padding-left: 30px;">
+        {% with course.requirement|split:"." as requirements %}
+        {% for requirement in requirements %}
+        <li class="s-title">
+            <p>{{requirement}}.</p>
+        </li>
+        {% endfor %}
+        {% endwith %}
+    </ul>
     <p class="title">Description</p>
-    <p>{{course.description}}</p><br>
+    <p style="padding-left: 17px;line-height: 1.6;" class="s-title">{{course.description}}</p><br>
     <p class="title">Reviews</p><br>
     <div class="block">
 
     </div>
 
 </section>
+
+<script>
+    function saveToLocal() {
+        var cart = window.localStorage.getItem('cart');
+        var cartLenght = 0;
+        if (cart == null) {
+            cart = '{}';
+        }
+        const jsonObj = JSON.parse(cart);
+        jsonObj['{{id}}'] = '{{id}}';
+
+        cart = JSON.stringify(jsonObj);
+
+        window.localStorage.setItem('cart', cart);
+    }
+</script>
 
 {% endblock %}

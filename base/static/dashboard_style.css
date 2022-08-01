@@ -64,12 +64,3 @@ h2 {
     border-color: #34495E;
     border-radius: 5px;
 }
-
-.card{
-    padding: 10px;
-    overflow: auto;
-    background: white;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
-}

@@ -14,29 +14,41 @@
 {% block Signup %}{% if login %}inactive{% endif %}{% endblock %}
 {% block Logout %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block Dashboard %}{% if not login %}inactive{% endif %}{% endblock %}
+{% block Cart %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block content %}
 <section>
     <h2><i class="fa-solid fa-angles-right"></i> Latest Published</h2>
     <div class="grid_container">
         {% for course in courses %}
         <div class="card">
-            <a href="/view_course/{{ course.id }}">
-                <img src="/media/images/{{course.imageUrl}}" width="100%" height="160px" />
-            </a>
-            <h3 class="content_title">
-                <p>{{ course.title }}</p>
-            </h3>
-            <div class="rating">
-                <span>{{ course.rating }} </span>
-                {% for x in 5|times %}
-                <span class="fa fa-star"></span>
-                {% endfor %}
-                <span>( {{ course.numberOfRating }} )</span>
+            <div style="position: relative;">
+                {% if course.fee == 0 %}
+                <p class="price">Free</p>
+                {% else %}
+                <p class="price">${{course.fee}}</p>
+                {% endif %}
+                <a href="/view_course/{{ course.id }}">
+                    <img src="/media/images/{{course.imageUrl}}" width="100%" height="160px" />
+                </a>
             </div>
-            <div class="date">
-                <h4>
-                    <p>{{ course.uploadDate }}</p>
-                </h4>
+            <div class="card-content">
+                <h3 class="content_title">
+                    <a href="/view_course/{{ course.id }}">
+                        <p>{{ course.title }}</p>
+                    </a>
+                </h3>
+                <div class="rating">
+                    <span>{{ course.rating }} </span>
+                    {% for x in 5|times %}
+                    <span class="fa fa-star"></span>
+                    {% endfor %}
+                    <span>( {{ course.numberOfRating }} )</span>
+                </div>
+                <div class="date">
+                    <h4>
+                        <p>{{ course.uploadDate }}</p>
+                    </h4>
+                </div>
             </div>
         </div>
         {% endfor %}
