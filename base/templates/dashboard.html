@@ -21,15 +21,32 @@
     {% if user.account_type == "Student" %}
 
     <div class="block">
-        <p>Courses you taken:</p>
+        <h2>Courses you taken:</h2>
+        <div class="grid_container">
+            {% for course in courses %}
+            <div class="card">
+                <div>
+                    <a href="/open_course/{{ course.id }}">
+                        <img src="/media/{{course.cover_image}}" width="100%" height="160px" />
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h3 class="content_title">
+                        <p>{{ course.title }}</p>
+                    </h3>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
     </div>
-    <div class="block">
+    <!-- <div class="block">
         <p>Progress on each course:</p>
         <h3>Title</h3>
         <div class="fixed_progress">
             <div class="progress"></div>
         </div>
-    </div>
+    </div> -->
     {% else %}
 
     <div class="block">
@@ -66,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            
+
             {% endfor %}
         </div>
 

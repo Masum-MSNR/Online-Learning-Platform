@@ -28,6 +28,8 @@
 </section>
 
 <script>
+    document.getElementById('id_username').value="{{user.username}}"
+
     function btnSearch_Click() {
          var radio1=[document.getElementById("id_course_type_0")].some(c=>c.checked);
          var radio2=[document.getElementById("id_course_type_1")].some(c=>c.checked);

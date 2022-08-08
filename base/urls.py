@@ -12,7 +12,8 @@ urlpatterns = [
     path("categories", views.categories),
     path("cart", views.cart),
     path("verify/<str:token>", views.verify),
-    path("view_course/<str:id>", views.view_course,name="uma"),
+    path("view_course/<str:id>", views.view_course),
     path("add_course", views.add_course),
     path("edit_course/<str:id>", views.edit_course),
+    path("open_course/<str:id>", views.open_course),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

@@ -27,16 +27,18 @@
         <p class="price">${{course.fee}}</p>
         {% endif %}
         <p class="title">{{course.title}}</p>
+        {% if is_soldable %}
         <form method="post">
             {% csrf_token %}
             <input type="submit" value="Add To Cart" name="add_to_cart" class="button" />
         </form>
+        {% endif %}
         <!-- <p class="button" onclick="saveToLocal();">Add To Cart</p> -->
-        <P class="s-title">by <b>{{course.user}}</b> -- on <b>{{course.uploadDate}}</b></P>
+        <P class="s-title">by <b>{{course.username}}</b> -- on <b>{{ course.time|date:"M d, Y" }}</b></P>
     </div>
 
     <br>
-    <img src="/media/images/{{course.imageUrl}}" class="center" />
+    <img src="/media/{{course.cover_image}}" class="center" height="200px" />
     <br>
 
     <p class="title">What you'll learn</p>
@@ -61,9 +63,33 @@
     </ul>
     <p class="title">Description</p>
     <p style="padding-left: 17px;line-height: 1.6;" class="s-title">{{course.description}}</p><br>
-    <p class="title">Reviews</p><br>
+    <p class="title">Reviews</p>
     <div class="block">
+        <div class="grid-container">
+            {% for review in page_obj %}
+            <div class="review-tile">
+                <b>{{ review.username|upper }}</b> <span style="float: right;"><b>{{ review.rating }}</b></span>
+                <p>{{review.description}}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="c-center">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                <a href="?page=1" class="pagination-button">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-button">previous</a>
+                {% endif %}
 
+                <!-- <span class="current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span> -->
+
+                {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-button">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-button">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
     </div>
 
 </section>

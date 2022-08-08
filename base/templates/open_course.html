@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load my_filters %}
+
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{% static 'open_course_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'rating_style.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block title %}Dashboard{% endblock %}
+{% block Login %}inactive{% endblock %}
+{% block Signup %}inactive{% endblock %}
+{% block content %}
+
+<section>
+    <span id="div_video">
+        <video width="50%" controls>
+            <source id="current_video" src="/media/{{first_video}}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </span>
+
+    <div id="myModal" class="modal">
+
+        <center>
+            <div style="background: white;width: 40%; border: none;
+            border-radius: 10px;
+            box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .1);">
+                <span class="close" onclick="hideDialog()">&times;</span>
+                <div style="padding: 20px;">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h3 style="margin-bottom: 5px;">Rating:</h3>
+                        <input class="rating" max="5" id="id_rating" name="rating"
+                            oninput="this.style.setProperty('--value', `${this.valueAsNumber}`)" step="0.5"
+                            style="--value:0.0" type="range" value="0.0">
+                        <h3 style="margin-bottom: 5px;">Description:</h3>
+                        <textarea rows="5" cols="40" name="description" id="id_description"></textarea>
+                        <input type="hidden" value="{{course.id}}" id="id_course_id" name="course_id">
+                        <input type="hidden" value="{{user.username}}" id="id_username" name="username">
+                        <input type="submit" value="Submit" id="submit">
+                    </form>
+                </div>
+            </div>
+        </center>
+    </div>
+
+    <div style="float: right; display: block; width: 48%;">
+        <div style="display: flex; justify-content: space-between;">
+            <span>
+                <h2><i class="fa-solid fa-angles-right"></i> Videos</h2>
+            </span>
+            {% if is_reviewed %}
+            <a class="button" onclick="loadDialog()">Review</a>
+            {% endif %}
+        </div>
+        <div class="scroll-block">
+            {% for video in videos %}
+            <div class="card" onclick="loadNewVideo('/media/{{video.video_file}}')">
+                <p class="title">{{video.s_id}}. {{video.title}}</p>
+                <p class="min">{{video.duration}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+    var modal = document.getElementById("myModal");
+
+    function loadDialog() {
+        modal.style.display = "block";
+    }
+
+    function hideDialog() {
+        modal.style.display = "none";
+    }
+
+
+    function loadNewVideo(src) {
+        document.getElementById('div_video').innerHTML =
+            '<video autoplay id="current_video" width="50%" controls><source src="' + src + '" type="video/mp4">Your browser does not support the video tag.</video>';
+    }
+</script>
+
+{% endblock %}

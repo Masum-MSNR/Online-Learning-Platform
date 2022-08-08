@@ -2,9 +2,8 @@
 {% load static %}
 {% load my_filters %}
 
-
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'index_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'categories_style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
@@ -18,19 +17,18 @@
 {% block content %}
 
 <section>
-    <p>Academics
-        Business
-        Design
-        Development
-        Health & Fitness
-        IT & Software
-        Language
-        Lifestyle
-        Marketing
-        Music
-        Office Productivity
-        Personal Development
-        Photography</p>
+    <div class="grid_container">
+        {% for category in categories %}
+        <a href="#">
+            <div class="card" style="position: relative;">
+                <img src="/media/images/categories/{{category.imageUrl}}" height="150px" width="100%">
+                <span class="category">
+                    <p>{{category.name}}</p>
+                </span>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 </section>
 
 {% endblock %}

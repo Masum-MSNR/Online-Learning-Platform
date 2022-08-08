@@ -42,7 +42,7 @@
         <span class="value">{{course.uploadDate}}</span>
     </p>
     <h2><i class="fa-solid fa-angles-right"></i> Videos</h2>
-    {% for video in course.videos.values %}
+    {% for video in videos %}
     <div class="card">
         <p class="title">{{video.s_id}}. {{video.title}}</p>
         <p class="min">{{video.duration}}</p>
@@ -62,12 +62,56 @@
 </section>
 
 <script>
+    document.getElementById('id_course_id').value = "{{course.id}}";
+    document.getElementById('id_s_id').value = parseInt('{{course.video_count}}') + 1;
+
+    document.getElementById('id_video_file').onchange = setFileInfo;
+
+
+    function setFileInfo() {
+        var files = this.files;
+        var video = document.createElement('video');
+        video.preload = 'metadata';
+
+        video.onloadedmetadata = function () {
+            window.URL.revokeObjectURL(video.src);
+            var duration = video.duration;
+            var h = parseInt(duration / 3600) % 24;
+            var m = parseInt(parseInt(duration % 3600) / 60);
+            var s = parseInt(parseInt(duration % 3600) % 60);
+            var d = "";
+            if (h > 0) {
+                if (h < 10) {
+                    d += "0" + h;
+                } else {
+                    d += h;
+                }
+                d += ":";
+            }
+
+            if (m < 10) {
+                d += "0" + m;
+            } else {
+                d += m;
+            }
+            d += ":";
+            if (s < 10) {
+                d += "0" + s;
+            } else {
+                d += s;
+            }
+
+            document.getElementById('id_duration').value = d;
+        }
+        video.src = URL.createObjectURL(files[0]);;
+    }
+
     function onAddVideoClick() {
         document.getElementById("video-block").style.display = 'block';
         document.getElementById("add-video-bt").style.display = 'none';
     }
 
-    function onEditClick(){
+    function onEditClick() {
         alert("The URL of this page is: " + window.location.href);
     }
 </script>

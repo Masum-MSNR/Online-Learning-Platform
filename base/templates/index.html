@@ -5,6 +5,7 @@
 
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'index_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'view_rating_style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
@@ -17,9 +18,9 @@
 {% block Cart %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block content %}
 <section>
-    <h2><i class="fa-solid fa-angles-right"></i> Latest Published</h2>
+    <h2 class="big-title"> Latest Published</h2>
     <div class="grid_container">
-        {% for course in courses %}
+        {% for course in latestCourses %}
         <div class="card">
             <div style="position: relative;">
                 {% if course.fee == 0 %}
@@ -28,7 +29,7 @@
                 <p class="price">${{course.fee}}</p>
                 {% endif %}
                 <a href="/view_course/{{ course.id }}">
-                    <img src="/media/images/{{course.imageUrl}}" width="100%" height="160px" />
+                    <img src="/media/{{course.cover_image}}" width="100%" height="160px" />
                 </a>
             </div>
             <div class="card-content">
@@ -37,16 +38,15 @@
                         <p>{{ course.title }}</p>
                     </a>
                 </h3>
-                <div class="rating">
-                    <span>{{ course.rating }} </span>
-                    {% for x in 5|times %}
-                    <span class="fa fa-star"></span>
-                    {% endfor %}
-                    <span>( {{ course.numberOfRating }} )</span>
+                <div class="v-center">
+                    <span ><p>{{ course.rating }}</p></span>
+                    <input class="rating" max="5" id="id_rating" name="rating"
+                        style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
+                    <span><p>({{ course.number_of_rating }})</p></span>
                 </div>
                 <div class="date">
                     <h4>
-                        <p>{{ course.uploadDate }}</p>
+                        <p>{{ course.time|date:"M d, Y" }}</p>
                     </h4>
                 </div>
             </div>
@@ -55,54 +55,74 @@
     </div>
 </section>
 <section>
-    <h2><i class="fa-solid fa-angles-right"></i> Top Rated</h2>
+    <h2 class="big-title"> Top Rated</h2>
     <div class="grid_container">
-        {% for x in 6|times %}
+        {% for course in topRatedCourses %}
         <div class="card">
-            <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" width="100%"
-                height="160px" />
-            <h3 class="content_title">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe, nisi.</p>
-            </h3>
-            <div class="rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span>(343)</span>
+            <div style="position: relative;">
+                {% if course.fee == 0 %}
+                <p class="price">Free</p>
+                {% else %}
+                <p class="price">${{course.fee}}</p>
+                {% endif %}
+                <a href="/view_course/{{ course.id }}">
+                    <img src="/media/{{course.cover_image}}" width="100%" height="160px" />
+                </a>
             </div>
-            <div class="date">
-                <h4>
-                    <p>Feb, 24 2022</p>
-                </h4>
+            <div class="card-content">
+                <h3 class="content_title">
+                    <a href="/view_course/{{ course.id }}">
+                        <p>{{ course.title }}</p>
+                    </a>
+                </h3>
+                <div class="v-center">
+                    <span ><p>{{ course.rating }}</p></span>
+                    <input class="rating" max="5" id="id_rating" name="rating"
+                        style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
+                    <span><p>({{ course.number_of_rating }})</p></span>
+                </div>
+                <div class="date">
+                    <h4>
+                        <p>{{ course.time|date:"M d, Y" }}</p>
+                    </h4>
+                </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </section>
 <section>
-    <h2><i class="fa-solid fa-angles-right"></i> Most Popular</h2>
+    <h2 class="big-title">Most Popular</h2>
     <div class="grid_container">
-        {% for x in 6|times %}
+        {% for course in mostPopularCourses %}
         <div class="card">
-            <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg" width="100%"
-                height="160px" />
-            <h3 class="content_title">
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Saepe, nisi.</p>
-            </h3>
-            <div class="rating">
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star checked"></span>
-                <span class="fa fa-star"></span>
-                <span class="fa fa-star"></span>
-                <span>(343)</span>
+            <div style="position: relative;">
+                {% if course.fee == 0 %}
+                <p class="price">Free</p>
+                {% else %}
+                <p class="price">${{course.fee}}</p>
+                {% endif %}
+                <a href="/view_course/{{ course.id }}">
+                    <img src="/media/{{course.cover_image}}" width="100%" height="160px" />
+                </a>
             </div>
-            <div class="date">
-                <h4>
-                    <p>Feb, 24 2022</p>
-                </h4>
+            <div class="card-content">
+                <h3 class="content_title">
+                    <a href="/view_course/{{ course.id }}">
+                        <p>{{ course.title }}</p>
+                    </a>
+                </h3>
+                <div class="v-center">
+                    <span ><p>{{ course.rating }}</p></span>
+                    <input class="rating" max="5" id="id_rating" name="rating"
+                        style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
+                    <span><p>({{ course.number_of_rating }})</p></span>
+                </div>
+                <div class="date">
+                    <h4>
+                        <p>{{ course.time|date:"M d, Y" }}</p>
+                    </h4>
+                </div>
             </div>
         </div>
         {% endfor %}

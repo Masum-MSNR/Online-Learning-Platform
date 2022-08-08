@@ -1,3 +1,7 @@
+:root {
+    --main_color: #34495E;
+}
+
 section {
     overflow: auto;
     background: white;
@@ -47,7 +51,7 @@ input[type=submit] {
     margin: 20px 0 20px 0;
     float: right;
     overflow: visible;
-    background: #000;
+    background: var(--main_color);
     border: none;
     color: white;
     padding: 10px 20px;

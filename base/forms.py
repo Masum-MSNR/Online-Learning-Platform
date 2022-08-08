@@ -1,11 +1,12 @@
 from asyncio.format_helpers import extract_stack
 import email
 from enum import unique
+from tkinter import Widget
 from turtle import onclick
 from bson import is_valid
 from django import forms
 from django.contrib.auth import authenticate
-from base.models import Course, User, Video
+from base.models import Course, Rating, User, Video, Rating
 
 
 class DateInput(forms.DateInput):
@@ -62,32 +63,49 @@ class CourseForm(forms.ModelForm):
         ('Office Productivity', 'Office Productivity'),
         ('Personal Development', 'Personal Development'),
         ('Photography', 'Photography')
-        ]
-    category = forms.ChoiceField(choices = categories)
+    ]
+    category = forms.ChoiceField(choices=categories)
     course_type = forms.ChoiceField(choices=types, widget=forms.RadioSelect(attrs={
         'onclick': "btnSearch_Click()",
     }))
 
     class Meta:
         model = Course
-        fields = ['category','coverImage', 'title', 'outcome',
+        fields = ['username', 'category', 'cover_image', 'title', 'outcome',
                   'requirement', 'description', 'course_type', 'fee']
         widgets = {
             'outcome': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
             'requirement': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
             'description': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
+            'username': forms.HiddenInput(),
         }
 
 
 class VideoForm(forms.ModelForm):
-
     video_file = forms.FileField(
-        widget=forms.FileInput(attrs={'accept': 'video/*'}))
+        widget=forms.FileInput(attrs={'accept': 'video/*'})
+    )
 
     class Meta:
         model = Video
-        fields = ['title', 'video_file']
+        fields = ['course_id','s_id','duration', 'title', 'video_file']
+        widgets = {
+            'course_id': forms.HiddenInput(),
+            's_id': forms.HiddenInput(),
+            'duration': forms.HiddenInput(),
+        }
 
 
 class TempForm(forms.Form):
     test = forms.CharField(max_length=20)
+
+
+class RatingForm(forms.ModelForm):
+
+    class Meta:
+        model = Rating
+        fields = ['username','course_id','rating', 'description']
+        widgets = {
+            'course_id': forms.HiddenInput(),
+            'username': forms.HiddenInput(),
+        }

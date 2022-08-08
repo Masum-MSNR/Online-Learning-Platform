@@ -1,3 +1,7 @@
+:root {
+    --main_color: #34495E;
+}
+
 section {
     padding: 20px 25px;
 }
@@ -61,4 +65,27 @@ section {
 
 li {
     margin-bottom: 5px;
+}
+
+.review-tile{
+    margin: 10px 0px;
+    padding: 10px;
+    border: solid 1px black ;
+    border-radius: 10px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1em;
+    row-gap: 0em;
+}
+
+.pagination-button{
+    margin: 0px 5px;
+    background: var(--main_color);
+    color: white;
+    border-radius: 5px;
+    padding: 3px 10px 5px 10px;
+    text-decoration: none;
 }

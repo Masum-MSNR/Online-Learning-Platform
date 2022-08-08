@@ -6,18 +6,28 @@ section {
     padding: 20px 25px;
 }
 
-.checked {
-    color: orange;
+.v-center {
+    display: flex;
+    align-self: center;
 }
 
-h2{
-    color: var(--main_color);
+span p{
+    font-size: 18px;
 }
 
-
+.big-title{
+    display: block;
+    text-align: center;
+    background: var(--main_color);
+    color: white;
+    font-size:30px;
+    letter-spacing: 5px;
+    border-radius: 10px;
+    padding: 10px 0px;
+}
 
 @media (min-width: 576px) {
-    .grid_container{
+    .grid_container {
         display: grid;
         grid-template-columns: 1fr;
         column-gap: 2em;
@@ -26,7 +36,7 @@ h2{
 }
 
 @media (min-width: 768px) {
-    .grid_container{
+    .grid_container {
         display: grid;
         grid-template-columns: 1fr 1fr;
         column-gap: 2em;
@@ -35,7 +45,7 @@ h2{
 }
 
 @media (min-width: 992px) {
-    .grid_container{
+    .grid_container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 2em;
@@ -44,7 +54,7 @@ h2{
 }
 
 @media (min-width: 1200px) {
-    .grid_container{
+    .grid_container {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
         column-gap: 2em;

@@ -1,8 +1,13 @@
+from asyncio.windows_events import NULL
 from cProfile import label
 import imp
+import random
+import string
+import os
 from itertools import tee
 from pyexpat import model
 from statistics import mode
+from time import time
 from turtle import title
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -10,7 +15,7 @@ from django.contrib.auth import hashers
 from django import forms
 from pkg_resources import require
 from django.core.validators import FileExtensionValidator
-
+from django.utils import timezone
 
 
 class MyUserManager(BaseUserManager):
@@ -86,16 +91,51 @@ class Comment:
 
 
 class Course(models.Model):
-    category= models.CharField(max_length=50,default="Random")
-    coverImage = models.ImageField(blank=True, null=True, upload_to="images/")
+    username = models.CharField(max_length=30)
+    cover_image = models.ImageField(blank=True, null=True, upload_to="images/")
+    category = models.CharField(max_length=50)
     title = models.CharField(max_length=255)
     outcome = models.TextField()
     requirement = models.TextField()
     description = models.TextField()
     course_type = models.CharField(max_length=30, default='Free')
     fee = models.IntegerField(blank=True, null=True, default=0)
+    time = models.DateTimeField(default=timezone.now)
+    video_count = models.IntegerField(blank=True, null=True, default=0)
+    rating=models.FloatField(default=0)
+    number_of_rating=models.IntegerField(default=0)
+    number_of_sold=models.IntegerField(default=0)
 
 
 class Video(models.Model):
+    s_id = models.IntegerField(default=0)
+    course_id = models.IntegerField(default=0)
     video_file = models.FileField(upload_to="videos/")
-    title= models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    duration = models.CharField(max_length=20)
+
+    def save(self, *args, **kwargs):
+        modified_name = ''.join(random.choices(
+            string.ascii_uppercase + string.digits, k=20))
+        ext = os.path.splitext(self.video_file.name)[-1]
+        new_name = modified_name+ext
+        self.video_file.name = new_name
+        super(Video, self).save(*args, **kwargs)
+        
+
+class Cart(models.Model):
+    course_id=models.IntegerField(default=0)
+    username = models.CharField(max_length=30)
+    
+
+class StudentCourse(models.Model):
+    course_id=models.IntegerField(default=0)
+    username = models.CharField(max_length=30)
+    
+
+
+class Rating(models.Model):
+    username=models.CharField(max_length=30,default=NULL)
+    course_id=models.IntegerField(default=0)
+    rating = models.FloatField(default=0.0)
+    description = models.CharField(null=True, blank=True, max_length=555)
