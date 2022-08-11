@@ -6,26 +6,6 @@ section {
     padding: 20px 25px;
 }
 
-.v-center {
-    display: flex;
-    align-self: center;
-}
-
-span p{
-    font-size: 18px;
-}
-
-.big-title{
-    display: block;
-    text-align: center;
-    background: var(--main_color);
-    color: white;
-    font-size:30px;
-    letter-spacing: 5px;
-    border-radius: 10px;
-    padding: 10px 0px;
-}
-
 @media (min-width: 576px) {
     .grid_container {
         display: grid;

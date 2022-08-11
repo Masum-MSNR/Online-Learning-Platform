@@ -31,8 +31,47 @@ body {
     border-radius: 10px;
 }
 
+
 .card:hover {
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .1);
+}
+
+.big-title{
+    display: block;
+    text-align: center;
+    background: var(--main_color);
+    color: white;
+    font-size:30px;
+    letter-spacing: 5px;
+    border-radius: 10px;
+    padding: 10px 0px;
+}
+
+.v-center {
+    display: flex;
+    align-self: center;
+}
+
+span p{
+    font-size: 18px;
+}
+
+input[type=submit] {
+    margin: 10px 0 20px 0;
+    float: right;
+    overflow: visible;
+    background: var(--main_color);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    letter-spacing: 3px;
+}
+
+input[type=submit]:hover{
+    cursor: pointer;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
 }
 
 nav {

@@ -15,21 +15,24 @@
 {% block Cart %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block content %}
 
-{% if error %}
-<div class="error-block">
-    <div ><span class="disk">*</span> {{ error }}</div>
-</div>
-{% endif %}
+
 
 <section>
-    <div class="block-header">Log In</div>
-    <form method="post">
-        <div class="block-body">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Log In" id="submit">
-        </div>
-    </form>
+    {% if error %}
+    <div class="error-block">
+        <div><span class="disk">*</span> {{ error }}</div>
+    </div>
+    {% endif %}
+    <div class="block">
+        <div class="block-header">Log In</div>
+        <form method="post">
+            <div class="block-body">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Log In" id="submit">
+            </div>
+        </form>
+    </div>
 </section>
 
 {% endblock %}

@@ -1,5 +1,6 @@
 
 from math import fabs
+from multiprocessing import context
 import random
 from time import time
 from django.shortcuts import redirect, render
@@ -18,7 +19,7 @@ def index(request):
     topRatedCourses = Course.objects.all().order_by('-rating')[:6]
     mostPopularCourses = Course.objects.all().order_by('-number_of_sold')[:6]
 
-    context = {'login': True,
+    context = {'login': False,
                'latestCourses': latestCourses,
                'topRatedCourses': topRatedCourses,
                'mostPopularCourses': mostPopularCourses,
@@ -35,6 +36,11 @@ def index(request):
 
 
 def login(request):
+    form = LogInForm()
+    context = {
+        'form': form,
+        'error': ""
+    }
     if request.method == 'POST':
         form = LogInForm(request.POST, request.POST)
         if form.is_valid():
@@ -47,50 +53,63 @@ def login(request):
                     messages.info(request, "Login successful.")
                     return redirect('/')
                 else:
-                    return render(request, 'login.html', {'form': form, 'error': "Please Active your account first."})
+                    context = {
+                        'form': form,
+                        'error': "Please Active your account first.",
+                    }
+                    return render(request, 'login.html', context)
             else:
-                return render(request, 'login.html', {'form': form, 'error': "Invalid."})
-
-    form = LogInForm()
-    return render(request, 'login.html', {'form': form, 'error': ""})
+                context = {
+                    'form': form,
+                    'error': "Invalid Username or Password.",
+                }
+                return render(request, 'login.html', context)
+    return render(request, 'login.html', context)
 
 
 def logout(request):
     auth_logout(request)
-    messages.info(request, "Logout successful.")
+    messages.info(request, "Logout successful!")
     return redirect('/')
 
 
 def signup(request):
+    form = SignUpForm()
+    context = {
+        'form': form,
+        'error': ""
+    }
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.POST)
         if form.is_valid():
             email = form.cleaned_data['email']
-            if not User.objects.filter(email=email).exists():
-                userForm = form.save(commit=False)
-                domain_name = get_current_site(request).domain
+            userForm = form.save(commit=False)
+            domain_name = get_current_site(request).domain
 
-                messages.info(request, "Account created successfully.")
-                token = str(random.random()).split('.')[1]
-                userForm.token = token
-                link = f'http://{domain_name}/verify/{token}'
+            token = str(random.random()).split('.')[1]
+            userForm.token = token
+            link = f'http://{domain_name}/verify/{token}'
 
-                send_mail(
-                    'Online Learning mail verification',
-                    f'Please click {link} to verify',
-                    settings.EMAIL_HOST_USER,
-                    [email],
-                    fail_silently=False
-                )
+            send_mail(
+                'Online Learning mail verification',
+                f'Please click {link} to verify',
+                settings.EMAIL_HOST_USER,
+                [email],
+                fail_silently=False
+            )
+            userForm.save()
+            messages.info(
+                request, f"Account Created Successful. Check Your E-mail[{email}] to verify.")
+            return redirect('/login')
+        else:
+            form.errors
+            context = {
+                'form': form,
+                'error': "E-mail already exists."
+            }
+            return render(request, 'signup.html', context)
 
-                userForm.save()
-
-                return redirect('/login')
-            else:
-                messages.info(request, "E-mail already exists.")
-
-    form = SignUpForm()
-    return render(request, 'signup.html', {'form': form})
+    return render(request, 'signup.html', context)
 
 
 def categories(request):
@@ -128,10 +147,14 @@ def dashboard(request):
                 result.append(Course.objects.filter(id=id.course_id)[0])
 
         elif user.account_type == 'Publisher':
-            result = db.base_course.find({'username': user.username})
+            result = Course.objects.filter(
+                username=user.username).order_by("-time")
 
-        context = {'login': True, 'user': user, 'courses': result,
-                   'cart_count': cart_counter(request)}
+        context = {'login': True,
+                   'user': user,
+                   'courses': result,
+                   'cart_count': cart_counter(request)
+                   }
     return render(request, 'dashboard.html', context)
 
 
@@ -146,6 +169,7 @@ def cart(request):
                 item = Cart.objects.filter(
                     username=user.username, course_id=id)[0]
                 item.delete()
+                return redirect('/cart')
             elif request.POST.get('confirm_parches') is not None:
                 cartItems = Cart.objects.filter(username=user.username)
                 for courseId in cartItems:
@@ -162,27 +186,30 @@ def cart(request):
                 return redirect('/dashboard')
 
         result = Cart.objects.filter(username=user.username)
+        no_item = len(result) == 0
         courses = []
         totalFee = 0
         for courseId in result:
             course = Course.objects.filter(id=courseId.course_id)[0]
             totalFee += course.fee
             courses.append(course)
-    context = {'login': True, 'courses': courses,
-               'total': totalFee, 'cart_count': cart_counter(request)}
+    context = {'login': True,
+               'courses': courses,
+               'total': totalFee,
+               'cart_count': cart_counter(request),
+               'no_item': no_item
+               }
     return render(request, 'cart.html', context)
 
 
 def verify(request, token):
     user = User.objects.filter(token=token)[0]
-
     if user.is_verified:
         messages.info(request, "Already verified.")
     else:
         user.is_verified = True
         user.save()
         messages.info(request, "Successfully Verified.")
-
     return redirect('/login')
 
 
@@ -193,8 +220,8 @@ def view_course(request, id):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     user = request.user
-    if user.is_authenticated:
-        if request.POST.get('add_to_cart') is not None:
+    if request.POST.get('add_to_cart') is not None:
+        if user.is_authenticated:
             count = len(Cart.objects.filter(
                 username=user.username, course_id=id))
             if count == 0:
@@ -203,6 +230,9 @@ def view_course(request, id):
             else:
                 print('already in the cart')
             return redirect('/view_course/'+id)
+        else:
+            return redirect('/login')
+    if user.is_authenticated:
         is_soldable = len(StudentCourse.objects.filter(
             username=user.username, course_id=id)) == 0
 
@@ -218,7 +248,7 @@ def view_course(request, id):
                    'id': id,
                    'course': result,
                    'cart_count': cart_counter(request),
-                   'is_bought': True,
+                   'is_soldable': True,
                    'page_obj': page_obj
                    }
     return render(request, 'view_course.html', context)
@@ -253,8 +283,8 @@ def edit_course(request, id):
                 Course.objects.filter(id=id).update(
                     video_count=video_count)
                 return redirect('/edit_course/'+id)
-        course = db.base_course.find({'id': int(id)}).next()
-        result = db.base_video.find({'course_id': int(id)})
+        course = Course.objects.filter(id=int(id))[0]
+        result = Video.objects.filter(course_id=int(id))
         form = VideoForm()
         context = {
             'login': True,
@@ -299,6 +329,17 @@ def open_course(request, id):
         'cart_count': cart_counter(request)
     }
     return render(request, 'open_course.html', context)
+
+
+def category(request, category):
+    courses = Course.objects.filter(category=category)
+    context = {
+        'login': True,
+        'category': category,
+        'courses': courses,
+        'cart_count': cart_counter(request),
+    }
+    return render(request, 'category.html', context)
 
 
 def time_format(seconds: int):

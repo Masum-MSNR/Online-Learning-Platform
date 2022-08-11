@@ -16,14 +16,16 @@
 {% block content %}
 
 <section>
-    <div class="block-header">Sign Up</div>
-    <form method="post">
-        <div class="block-body">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="Sign Up" id="submit">
-        </div>
-    </form>
+    <div class="block">
+        <div class="block-header">Sign Up</div>
+        <form method="post">
+            <div class="block-body">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Sign Up" id="submit">
+            </div>
+        </form>
+    </div>
 </section>
 
 {% endblock %}

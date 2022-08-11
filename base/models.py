@@ -105,6 +105,14 @@ class Course(models.Model):
     rating=models.FloatField(default=0)
     number_of_rating=models.IntegerField(default=0)
     number_of_sold=models.IntegerField(default=0)
+    
+    def save(self, *args, **kwargs):
+        modified_name = ''.join(random.choices(
+            string.ascii_uppercase + string.digits, k=20))
+        ext = os.path.splitext(self.cover_image.name)[-1]
+        new_name = modified_name+ext
+        self.cover_image.name = new_name
+        super(Course, self).save(*args, **kwargs)
 
 
 class Video(models.Model):

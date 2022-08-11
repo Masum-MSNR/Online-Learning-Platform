@@ -1,30 +1,32 @@
+:root {
+    --main_color: #34495E;
+}
+
+
 section {
     padding: 20px 25px;
 }
 
-
-.card {
-    padding: 10px;
-    overflow: auto;
-    background: white;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
-}
-
 .price {
+    height: 2em;
     text-decoration: none;
     font-size: 17px;
     padding: 5px 10px;
     background: white;
     font-weight: bold;
     position: absolute;
+    right: auto;
     left: 0px;
     top: 0px;
+    display: flex;
+    align-items: center;
+    border-radius: 0px 0px 10px 0px;
+
 }
 
-.delete {
+input[type="submit"].delete {
     text-decoration: none;
+    height: 2em;
     font-size: 17px;
     padding: 5px 10px;
     background: white;
@@ -35,10 +37,11 @@ section {
     border-style: solid;
     border-color: white;
     border-width: 5px 5px;
-}
-
-.delete:hover {
-    cursor: pointer;
+    background-image: url('/media/images/svg/trash-can-solid.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 0px 0px 0px 10px;
+    margin: 0px;
 }
 
 a:visited {
@@ -46,15 +49,17 @@ a:visited {
 }
 
 
-.button {
+input[type="submit"].button {
     color: white;
     border: 0px;
     margin-top: 10px;
+    font-size: 15px;
     border-radius: 10px;
     background-color: var(--main_color);
-    padding: 7px 10px;
+    padding: 8px 12px;
     text-decoration: none;
     font-weight: bold;
+    float: left;
 }
 
 :hover.button {

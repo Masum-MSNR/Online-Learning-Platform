@@ -1,0 +1,14 @@
+:root {
+    --main_color: #34495E;
+}
+
+section {
+    padding: 20px 25px;
+}
+
+.grid_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 2em;
+    row-gap: 1em;
+}

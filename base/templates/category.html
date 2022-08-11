@@ -4,27 +4,21 @@
 
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'cart_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'category_style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'view_rating_style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
-{% block title %}Cart{% endblock %}
-{% block Cart %}active{% endblock %}
+{% block title %}Dashboard{% endblock %}
 {% block Login %}{% if login %}inactive{% endif %}{% endblock %}
 {% block Signup %}{% if login %}inactive{% endif %}{% endblock %}
 {% block Logout %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block Dashboard %}{% if not login %}inactive{% endif %}{% endblock %}
+{% block Cart %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block content %}
 
 <section>
-
-
-    {% if no_item %}
-    <div class="c-center">
-        <img src="/media/images/site/empty_cart.png">
-    </div>
-    {% else %}
+    <h2 class="big-title">{{category}}</h2>
     <div class="grid_container">
         {% for course in courses %}
         <div class="card">
@@ -37,11 +31,6 @@
                 <a href="/view_course/{{ course.id }}">
                     <img src="/media/{{course.cover_image}}" width="100%" height="160px" />
                 </a>
-                <form method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="id" value="{{course.id}}" />
-                    <input type="submit" value="" name="delete" class="delete" />
-                </form>
             </div>
             <div class="card-content">
                 <h3 class="content_title">
@@ -50,14 +39,10 @@
                     </a>
                 </h3>
                 <div class="v-center">
-                    <span>
-                        <p>{{ course.rating }}</p>
-                    </span>
+                    <span ><p>{{ course.rating }}</p></span>
                     <input class="rating" max="5" id="id_rating" name="rating"
                         style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
-                    <span>
-                        <p>({{ course.number_of_rating }})</p>
-                    </span>
+                    <span><p>({{ course.number_of_rating }})</p></span>
                 </div>
                 <div class="date">
                     <h4>
@@ -68,18 +53,6 @@
         </div>
         {% endfor %}
     </div>
-    <div style="margin-top: 20px;">
-        <span>
-            <h2>Total Price: ${{total}}</h2>
-        </span>
-        <form method="post">
-            {% csrf_token %}
-            <span><input type="submit" value="Confirm Parches" name="confirm_parches" class="button" /></span>
-        </form>
-    </div>
-    {% endif %}
-
-
 </section>
 
 {% endblock %}

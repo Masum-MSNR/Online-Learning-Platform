@@ -5,6 +5,7 @@
 
 {% block styles %}
 <link rel="stylesheet" type="text/css" href="{% static 'dashboard_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'view_rating_style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
@@ -17,7 +18,7 @@
 <section>
     <h1>Welcome, {{user.username}}</h1>
     <img class="profile_pic" height="55px" width="55px"
-        src="https://www.unitedway.ca/wp-content/uploads/2017/06/TempProfile.jpg">
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
     {% if user.account_type == "Student" %}
 
     <div class="block">
@@ -62,28 +63,28 @@
                     <p class="price">${{course.fee}}</p>
                     {% endif %}
                     <a href="/edit_course/{{ course.id }}">
-                        <img src="/media/images/{{course.imageUrl}}" width="100%" height="160px" />
+                        <img src="/media/{{course.cover_image}}" width="100%" height="160px" />
                     </a>
                 </div>
                 <div class="card-content">
                     <h3 class="content_title">
-                        <p>{{ course.title }}</p>
+                        <a href="/view_course/{{ course.id }}">
+                            <p>{{ course.title }}</p>
+                        </a>
                     </h3>
-                    <div class="rating">
-                        <span>{{ course.rating }} </span>
-                        {% for x in 5|times %}
-                        <span class="fa fa-star"></span>
-                        {% endfor %}
-                        <span>( {{ course.numberOfRating }} )</span>
+                    <div class="v-center">
+                        <span ><p>{{ course.rating }}</p></span>
+                        <input class="rating" max="5" id="id_rating" name="rating"
+                            style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
+                        <span><p>({{ course.number_of_rating }})</p></span>
                     </div>
                     <div class="date">
                         <h4>
-                            <p>{{ course.uploadDate }}</p>
+                            <p>{{ course.time|date:"M d, Y" }}</p>
                         </h4>
                     </div>
                 </div>
             </div>
-
             {% endfor %}
         </div>
 
