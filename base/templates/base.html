@@ -7,6 +7,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+  <link rel="icon" href="{% static 'favicon.ico' %}">
+
   {% block styles %}
 
   {% endblock %}
@@ -23,34 +25,33 @@
   </script>
   {% endfor %}
   <header>
-    <input type="checkbox" id="check" name="check" role="button">
-    <nav>
-      <label for="check" class="checkbtn">
-        <i class="fa-solid fa-bars"></i>
-      </label>
-      <label class="search-icon"><i class="fa-solid fa-search"></i></label>
+    <div class="dropdown">
+      <nav>
+        <a href="/" class="logo">Online Learning</a>
+        <ul>
+          {% block Search %} {% endblock %}
+          <li class="{% block Home %} {% endblock %}"><a href="/">Home</a></li>
+          <li class="{% block Categories %} {% endblock %}"><a href="/categories">Categories</a></li>
+          <li class="{% block Dashboard %} {% endblock %}"><a href="/dashboard">Dashboard</a></li>
+          <li class="{% block Login %} {% endblock %}"><a href="/login">Log in</a></li>
+          <li class="{% block Signup %} {% endblock %}"><a href="/signup">Sign up</a></li>
+          <li class="{% block Cart %} {% endblock %}"><a href="/cart" id="cart">
+              <i class="fa-solid fa-cart-arrow-down"></i>
+              <span class='badge badge-warning' id='lblCartCount'> {{cart_count}} </span>
+            </a>
+          </li>
+          <li class="{% block Logout %} {% endblock %}">
 
-      <label class="logo"><a href="/">Online Learning</a></label>
-      <ul>
-        <li>
-          <input type="search" placeholder="Search" class="search-box">
-          <label for="srch" class="search-icon"><i class="fa-solid fa-search"></i></label>
-        </li>
-        <li class="{% block Home %} {% endblock %}"><a href="/">Home</a></li>
-        <li class="{% block Categories %} {% endblock %}"><a href="/categories">Categories</a></li>
-        <li class="{% block Dashboard %} {% endblock %}"><a href="/dashboard">Dashboard</a></li>
-        <li class="{% block Login %} {% endblock %}"><a href="/login">Log in</a></li>
-        <li class="{% block Signup %} {% endblock %}"><a href="/signup">Sign up</a></li>
-        <li class="{% block Cart %} {% endblock %}"><a href="/cart" id="cart">
-            <i class="fa-solid fa-cart-arrow-down"></i>
-            <span class='badge badge-warning' id='lblCartCount'> {{cart_count}} </span>
-          </a>
-        </li>
-        <li class="{% block Logout %} {% endblock %}"><a href="/logout" id="logout"><i
-              class="fa-solid fa-arrow-right-from-bracket"></i></a>
-        </li>
-      </ul>
-    </nav>
+            <a>{{user.username}} (${{user.credit}})</a>
+            <ul>
+              <li><a href="/logout"><b>Logout</b></a></li>
+            </ul>
+
+          </li>
+        </ul>
+      </nav>
+    </div>
+
   </header>
   <div class="container">
     {% block content %}

@@ -8,16 +8,23 @@ section {
 }
 
 .button {
-    color: white;
+    color: var(--main_color);
+    float: right;
+    margin-right: 10px;
+    margin-top: 2px;
     border: 0px;
     border-radius: 10px;
-    background-color: var(--main_color);
-    padding: 7px 10px 7px 10px;
+    background-color: white;
+    padding: 5px 10px;
+    text-decoration: none;
     font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 0px;
 }
 
 .button:hover {
     cursor: pointer;
+    box-shadow: 2px 2px 4px 2px rgba(168, 168, 168, 0.2);
 }
 
 .card {
@@ -91,13 +98,15 @@ section {
 
 
 input[type=submit] {
-    font-weight: bold;
     display: block;
-    margin: 10px 0 0px 0;
-    overflow: visible;
-    background: var(--main_color);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
+    float: none;
+}
+
+.no-video-block{
+    background: rgb(229, 229, 229);
+    color: black;
+    padding: 100px 100px;
+    border-radius: 20px;
+    font-size: 50px;
+    font-weight: bold;
 }

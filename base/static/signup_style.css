@@ -59,20 +59,6 @@ section {
     padding: 10px 20px;
 }
 
-input[type=text],
-input[type=password],
-input[type=email],
-input[type=date] {
-    height: 100%;
-    border: 1px solid gray;
-    outline: none;
-    padding: 7px;
-    color: #000;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-
 .errorlist {
     margin: 0px 0px 10px 0px;
     color: red;

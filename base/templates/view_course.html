@@ -64,12 +64,15 @@
     <p class="title">Description</p>
     <p style="padding-left: 17px;line-height: 1.6;" class="s-title">{{course.description}}</p><br>
     <p class="title">Reviews</p>
+    {% if not page_obj %}
+    <p>No Review</p>
+    {% endif %}
     <div class="block">
         <div class="grid-container">
             {% for review in page_obj %}
             <div class="review-tile">
-                <b>{{ review.username|upper }}</b> <span style="float: right;"><b>{{ review.rating }}</b></span>
-                <p>{{review.description}}</p>
+                <b>{{ review.username|upper }}</b> <span style="float: right;color: gold;"><b>{{ review.rating }}</b></span>
+                <p style="color: grey;">{{review.description}}</p>
             </div>
             {% endfor %}
         </div>
@@ -79,10 +82,6 @@
                 <a href="?page=1" class="pagination-button">&laquo; first</a>
                 <a href="?page={{ page_obj.previous_page_number }}" class="pagination-button">previous</a>
                 {% endif %}
-
-                <!-- <span class="current">
-                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-                </span> -->
 
                 {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}" class="pagination-button">next</a>

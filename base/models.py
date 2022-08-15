@@ -1,5 +1,6 @@
 from asyncio.windows_events import NULL
 from cProfile import label
+from email.policy import default
 import imp
 import random
 import string
@@ -67,6 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     gender = models.CharField(max_length=30, default='Other')
     date_of_birth = models.CharField(max_length=60, default='00-00-00')
     account_type = models.CharField(max_length=30, default="Student")
+    credit=models.IntegerField(default=100)
     is_verified = models.BooleanField(default=False)
     token = models.CharField(max_length=300)
 
@@ -147,3 +149,7 @@ class Rating(models.Model):
     course_id=models.IntegerField(default=0)
     rating = models.FloatField(default=0.0)
     description = models.CharField(null=True, blank=True, max_length=555)
+    
+
+class Search(models.Model):
+    text=models.CharField(max_length=255)

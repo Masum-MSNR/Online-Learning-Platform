@@ -12,8 +12,17 @@
 {% block title %}Dashboard{% endblock %}
 {% block Login %}inactive{% endblock %}
 {% block Signup %}inactive{% endblock %}
+
 {% block content %}
 
+{% if first_video == "" %}
+
+<section>
+    <div class="no-video-block">
+        <p>Course has not yet started!</p>
+    </div>
+</section>
+{% else %}
 <section>
     <span id="div_video">
         <video width="50%" controls>
@@ -23,7 +32,6 @@
     </span>
 
     <div id="myModal" class="modal">
-
         <center>
             <div style="background: white;width: 40%; border: none;
             border-radius: 10px;
@@ -48,14 +56,12 @@
     </div>
 
     <div style="float: right; display: block; width: 48%;">
-        <div style="display: flex; justify-content: space-between;">
-            <span>
-                <h2><i class="fa-solid fa-angles-right"></i> Videos</h2>
-            </span>
+        <h2 class="big-title" style="padding-left: 15px;display: flex; justify-content: space-between;">Videos
             {% if is_reviewed %}
             <a class="button" onclick="loadDialog()">Review</a>
             {% endif %}
-        </div>
+        </h2>
+
         <div class="scroll-block">
             {% for video in videos %}
             <div class="card" onclick="loadNewVideo('/media/{{video.video_file}}')">
@@ -66,6 +72,8 @@
         </div>
     </div>
 </section>
+
+{% endif %}
 
 
 

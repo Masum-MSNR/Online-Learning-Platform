@@ -1,11 +1,21 @@
+:root {
+    --main_color: #34495E;
+}
+
 section {
+    padding: 20px 25px;
+}
+
+.block {
     overflow: auto;
     background: white;
-    margin: 20px 0px;
     border: none;
     border-radius: 10px;
-    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
-
+    border: solid 1px rgba(0, 0, 0, .2);
+    background-image: url('/media/images/site/add_course_bg.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .block-body label {
@@ -13,16 +23,19 @@ section {
     margin: 5px 0 5px 0;
     font-size: 17px;
     font-weight: bold;
+    letter-spacing: 2px;
 }
 
 .block-header {
     font-weight: bold;
     font-size: 35px;
     border-radius: 10px 10px 0 0;
-    background: white;
+    background: var(--main_color);
+    color: white;
     text-align: center;
     display: block;
     height: 80px;
+    letter-spacing: 5px;
     line-height: 80px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
 }
@@ -31,11 +44,11 @@ section {
     padding: 10px 20px;
 }
 
-.errorlist{
-    display: none!important;
+.errorlist {
+    display: none !important;
 }
 
-.error-block{
+.error-block {
     background: red;
     margin: 20px 0 0 0;
     color: white;
@@ -46,18 +59,19 @@ section {
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
 }
 
-#id_fee{
+#id_fee {
     display: none;
 }
 
-label[for="id_fee"]{
+label[for="id_fee"] {
     display: none;
 }
 
 input[type=text],
 input[type=password],
 input[type=email],
-input[type=date] {
+input[type=date],
+input[type=number] {
     height: 100%;
     border: 1px solid gray;
     outline: none;
@@ -67,14 +81,21 @@ input[type=date] {
     border-radius: 5px;
 }
 
-input[type=submit] {
-    align-self: baseline;
-    margin: 10px 0 20px 0;
-    float: right;
-    overflow: hidden;
-    background: #000;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
+
+input[type=file] {
+    display: none;
+}
+
+label[for=id_cover_image] {
+    display: none;
+}
+
+select {
+    height: 100%;
+    border: 1px solid gray;
+    outline: none;
+    padding: 7px;
+    color: #000;
+    font-size: 16px;
+    border-radius: 5px;
 }

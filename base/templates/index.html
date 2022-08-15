@@ -16,6 +16,15 @@
 {% block Logout %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block Dashboard %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block Cart %}{% if not login %}inactive{% endif %}{% endblock %}
+{% block Search %}
+<li>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="" name="search" id="search" class="search">
+    </form>
+</li>
+{% endblock %}
 {% block content %}
 <section>
     <h2 class="big-title"> Latest Published</h2>
@@ -39,10 +48,14 @@
                     </a>
                 </h3>
                 <div class="v-center">
-                    <span ><p>{{ course.rating }}</p></span>
+                    <span>
+                        <p>{{ course.rating }}</p>
+                    </span>
                     <input class="rating" max="5" id="id_rating" name="rating"
                         style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
-                    <span><p>({{ course.number_of_rating }})</p></span>
+                    <span>
+                        <p>({{ course.number_of_rating }})</p>
+                    </span>
                 </div>
                 <div class="date">
                     <h4>
@@ -76,10 +89,14 @@
                     </a>
                 </h3>
                 <div class="v-center">
-                    <span ><p>{{ course.rating }}</p></span>
+                    <span>
+                        <p>{{ course.rating }}</p>
+                    </span>
                     <input class="rating" max="5" id="id_rating" name="rating"
                         style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
-                    <span><p>({{ course.number_of_rating }})</p></span>
+                    <span>
+                        <p>({{ course.number_of_rating }})</p>
+                    </span>
                 </div>
                 <div class="date">
                     <h4>
@@ -113,10 +130,14 @@
                     </a>
                 </h3>
                 <div class="v-center">
-                    <span ><p>{{ course.rating }}</p></span>
+                    <span>
+                        <p>{{ course.rating }}</p>
+                    </span>
                     <input class="rating" max="5" id="id_rating" name="rating"
                         style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
-                    <span><p>({{ course.number_of_rating }})</p></span>
+                    <span>
+                        <p>({{ course.number_of_rating }})</p>
+                    </span>
                 </div>
                 <div class="date">
                     <h4>

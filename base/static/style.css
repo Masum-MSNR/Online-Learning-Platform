@@ -36,12 +36,12 @@ body {
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .1);
 }
 
-.big-title{
+.big-title {
     display: block;
     text-align: center;
     background: var(--main_color);
     color: white;
-    font-size:30px;
+    font-size: 30px;
     letter-spacing: 5px;
     border-radius: 10px;
     padding: 10px 0px;
@@ -52,9 +52,98 @@ body {
     align-self: center;
 }
 
-span p{
+
+/* nav */
+
+nav {
+    height: 70px;
+    background: white;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    padding: 0 0 0 45px;
+    height: auto;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--main_color);
+    line-height: 70px;
+    display: inline;
+    text-decoration: none;
+}
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    float: right;
+    margin-right: 30px;
+}
+
+nav ul li {
+    background: white;
+    position: relative;
+    list-style: none;
+    display: inline-block;
+}
+
+nav ul li a {
+    display: block;
+    padding: 0 15px;
+    color: var(--main_color);
+    text-decoration: none;
+    line-height: 70px;
+    font-size: 20px;
+}
+
+nav ul li a:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+nav ul ul {
+    position: absolute;
+    top: 70px;
+    display: none;
+}
+
+nav ul li:hover>ul {
+    display: block;
+}
+
+.dropdown {
+    top: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.inactive {
+    display: none;
+}
+
+/* nav */
+
+span p {
     font-size: 18px;
 }
+
+input[type=text],
+input[type=password],
+input[type=email],
+input[type=date] {
+    height: 100%;
+    border: 1px solid gray;
+    outline: none;
+    padding: 7px;
+    color: #000;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
 
 input[type=submit] {
     margin: 10px 0 20px 0;
@@ -69,22 +158,29 @@ input[type=submit] {
     letter-spacing: 3px;
 }
 
-input[type=submit]:hover{
+input[type=submit]:hover {
     cursor: pointer;
     box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
 }
 
-nav {
-    background-color: white;
-    height: 80px;
-    width: 100%;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
+button{
+    margin: 10px 0 20px 0;
+    float: right;
+    overflow: visible;
+    background: var(--main_color);
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 10px;
+    letter-spacing: 3px;
 }
+
+button:hover{
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
+}
+
+
 
 label.logo {
     color: var(--main_color);
@@ -100,11 +196,6 @@ label a {
     text-decoration: none;
 }
 
-nav ul {
-    float: right;
-    margin-right: 20px;
-    overflow: hidden;
-}
 
 
 label.icon {
@@ -116,44 +207,13 @@ label.icon {
     border-radius: 5px;
 }
 
-nav ul li {
-    display: inline-block;
-    line-height: 80px;
-    margin: 0 5px;
-}
 
-nav ul li a#cart,
-#logout {
-    color: var(--main_color);
-    font-size: 20px;
-    text-transform: uppercase;
-    padding: 7px 13px;
-    border-radius: 3px;
-    text-decoration: none;
-}
 
-nav ul li a {
-    color: var(--main_color);
-    font-size: 17px;
-    text-transform: uppercase;
-    padding: 7px 13px;
-    border-radius: 3px;
-    text-decoration: none;
-}
 
-nav ul li.active,
-nav ul li:hover {
-    color: var(--main_color);
-    font-weight: bold;
-    transition: .5s;
-}
 
-nav ul li.inactive {
-    display: none;
-    padding: 0;
-    margin: 0;
-    border: none;
-}
+
+
+
 
 .checkbtn {
     font-size: 30px;
@@ -169,29 +229,9 @@ nav ul li.inactive {
     display: none;
 }
 
-nav .search-icon {
-    display: none;
-}
 
-nav ul li .search-icon {
-    background-color: var(--main_color);
-    padding: 7px;
-    border-radius: 3px;
-    color: white;
-    font-size: 16px;
-    text-decoration: none;
-    display: inline;
-}
 
-nav ul .search-box {
-    height: 100%;
-    border: 1px solid gray;
-    outline: none;
-    padding: 7px;
-    color: #000;
-    font-size: 16px;
-    border-radius: 5px;
-}
+
 
 .badge {
     padding-left: 9px;
@@ -258,12 +298,7 @@ nav ul .search-box {
 
 @media (max-width: 1070px) {
 
-    nav {
-        background-color: white;
-        height: 70px;
-        width: 100%;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-    }
+
 
     label.logo {
         color: var(--main_color);
@@ -274,63 +309,12 @@ nav ul .search-box {
         display: inline;
     }
 
-    nav ul li {
-        display: inline-block;
-        line-height: 70px;
-        margin: 0 3px;
-    }
 
-    nav ul li a#cart,
-    #logout {
-        color: var(--main_color);
-        font-size: 19px;
-        text-transform: uppercase;
-        padding: 6px 12px;
-        border-radius: 3px;
-        text-decoration: none;
-    }
-
-    nav ul li a {
-        color: var(--main_color);
-        font-size: 16px;
-        text-transform: uppercase;
-        padding: 7px 13px;
-        border-radius: 3px;
-        text-decoration: none;
-    }
-
-    nav ul .search-icon {
-        background-color: var(--main_color);
-        padding: 6px;
-        border-radius: 3px;
-        color: white;
-        font-size: 16px;
-        text-decoration: none;
-    }
-
-    nav ul .search-box {
-        height: 100%;
-        border: 1px solid gray;
-        outline: none;
-        padding: 6px;
-        color: #000;
-        font-size: 15px;
-        border-radius: 5px;
-    }
 }
 
 @media (max-width:995px) {
 
-    nav {
-        background-color: white;
-        height: 70px;
-        width: 100%;
-        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-    }
 
-    nav ul .search-box {
-        display: none;
-    }
 
     label.logo {
         color: var(--main_color);
@@ -344,19 +328,7 @@ nav ul .search-box {
 }
 
 @media (max-width: 785px) {
-    nav .search-icon {
-        font-size: 24px;
-        color: var(--main_color);
-        float: right;
-        line-height: 70px;
-        margin-right: 25px;
-        cursor: pointer;
-        display: block;
-    }
 
-    nav ul .search-icon {
-        display: none;
-    }
 
     .checkbtn {
         font-size: 24px;
@@ -366,35 +338,6 @@ nav ul .search-box {
         margin-right: 25px;
         cursor: pointer;
         display: block;
-    }
-
-    nav ul {
-        position: fixed;
-        width: 50%;
-        background-color: white;
-        left: -100%;
-        transition: all .5s;
-        border-radius: 0 0 10px 0;
-        box-shadow: 0 2px 2px 0px rgba(0, 0, 0, .2);
-        /* display: none; */
-    }
-
-
-    nav ul li {
-        padding-left: 10px;
-        display: block;
-        margin: 5px 0;
-        line-height: 30px;
-    }
-
-    nav ul li a {
-        font-size: 16px;
-    }
-
-    a:hover,
-    a.active {
-        background: none;
-        color: blue;
     }
 
     #check:checked~nav ul {

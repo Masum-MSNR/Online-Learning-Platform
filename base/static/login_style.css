@@ -44,19 +44,6 @@ section {
     padding: 10px 20px;
 }
 
-input[type=email],
-input[type=password] {
-    display: block;
-    height: 100%;
-    border: 1px solid gray;
-    outline: none;
-    padding: 7px;
-    color: #000;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-
 
 .error-block {
     background: red;

@@ -2,68 +2,41 @@
     --main_color: #34495E;
 }
 
-
 section {
     padding: 20px 25px;
 }
 
-.price {
-    height: 2em;
-    text-decoration: none;
-    font-size: 17px;
-    padding: 5px 10px;
-    background: white;
-    font-weight: bold;
-    position: absolute;
-    right: auto;
-    left: 0px;
-    top: 0px;
-    display: flex;
-    align-items: center;
-    border-radius: 0px 0px 10px 0px;
 
+label{
+    display: none;
 }
 
-input[type="submit"].delete {
+input[type="submit"].search {
+    float: none;
     text-decoration: none;
+    margin: 0px; 
+    margin-left: 10px;
     height: 2em;
     font-size: 17px;
     padding: 5px 10px;
-    background: white;
+    background: var(--main_color);
     font-weight: bold;
-    position: absolute;
-    right: 0px;
-    top: 0px;
     border-style: solid;
-    border-color: white;
+    border-color: var(--main_color);
     border-width: 5px 5px;
-    background-image: url('/media/images/svg/trash-can-solid.svg');
+    background-image: url('/media/images/svg/search.svg');
     background-repeat: no-repeat;
     background-position: center;
-    border-radius: 0px 0px 0px 10px;
-    margin: 0px;
+    border-radius: 5px;
 }
 
-/* a:visited {
-    color: black;
-} */
-
-
-input[type="submit"].button {
-    color: white;
-    border: 0px;
-    margin-top: 10px;
-    font-size: 15px;
-    border-radius: 10px;
-    background-color: var(--main_color);
-    padding: 8px 12px;
-    text-decoration: none;
-    font-weight: bold;
-    float: left;
-}
-
-:hover.button {
+input[type=submit]:hover {
     cursor: pointer;
+    box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, .2);
+}
+
+input[type=text]{
+    width: 45%;
 }
 
 

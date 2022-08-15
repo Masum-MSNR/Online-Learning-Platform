@@ -4,22 +4,28 @@
 
 
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{% static 'category_style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'search_style.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'view_rating_style.css' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Home{% endblock %}
+{% block Home %}active{% endblock %}
 {% block Login %}{% if login %}inactive{% endif %}{% endblock %}
 {% block Signup %}{% if login %}inactive{% endif %}{% endblock %}
 {% block Logout %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block Dashboard %}{% if not login %}inactive{% endif %}{% endblock %}
 {% block Cart %}{% if not login %}inactive{% endif %}{% endblock %}
-
 {% block content %}
-
 <section>
-    <h2 class="big-title">{{category}}</h2>
+    <form method="post">
+        <div style="display: flex;">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="" name="search" id="search" class="search"></div>
+      </form>
+      <br>
+    <h2 class="big-title"> {{text}}</h2>
     <div class="grid_container">
         {% for course in courses %}
         <div class="card">

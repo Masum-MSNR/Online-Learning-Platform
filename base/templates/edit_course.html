@@ -11,11 +11,12 @@
 {% block title %}Dashboard{% endblock %}
 {% block Login %}inactive{% endblock %}
 {% block Signup %}inactive{% endblock %}
+
 {% block content %}
 
 <section>
-    <h2><i class="fa-solid fa-angles-right"></i> Details</h2>
-    <a class="button" href="/edit_course_details/{{id}}">Edit Details</a>
+    <h2 class="big-title">Details<a class="button" href="/edit_course_details/{{id}}">Edit Details</a></h2>
+    
     {% if course.fee == 0 %}
     <p class="e-margin">
         <span class="s-title">Course Fee:</span>
@@ -35,13 +36,13 @@
     <p class="e-margin">
         <span class="s-title">Rating:</span>
         <span class="value"> {{course.rating}}</span>
-        <span class="value"> ({{course.numberOfRating}})</span>
+        <span class="value"> ({{course.number_of_rating}})</span>
     </p>
     <p class="e-margin">
         <span class="s-title">Date of creation:</span>
-        <span class="value">{{course.uploadDate}}</span>
+        <span class="value">{{ course.time|date:"M d, Y" }}</span>
     </p>
-    <h2><i class="fa-solid fa-angles-right"></i> Videos</h2>
+    <h2  class="big-title"> Videos</h2>
     {% for video in videos %}
     <div class="card">
         <p class="title">{{video.s_id}}. {{video.title}}</p>
@@ -49,7 +50,7 @@
     </div>
     {% endfor %}
 
-    <button id="add-video-bt" class="button" onclick="onAddVideoClick()">Add New Video</button>
+    <button id="add-video-bt" onclick="onAddVideoClick()">Add New Video</button>
 
     <div class="add-video-block" id="video-block">
         <form method="post" enctype="multipart/form-data">

@@ -13,6 +13,7 @@
 {% block Login %}inactive{% endblock %}
 {% block Signup %}inactive{% endblock %}
 {% block Dashboard %}active{% endblock %}
+
 {% block content %}
 
 <section>
@@ -24,7 +25,7 @@
     <div class="block">
         <h2>Courses you taken:</h2>
         <div class="grid_container">
-            {% for course in courses %}
+            {% for course in scourses %}
             <div class="card">
                 <div>
                     <a href="/open_course/{{ course.id }}">
@@ -49,12 +50,31 @@
         </div>
     </div> -->
     {% else %}
+    <div class="block">
+        <h2>Courses you taken:</h2>
+        <div class="grid_container">
+            {% for course in scourses %}
+            <div class="card">
+                <div>
+                    <a href="/open_course/{{ course.id }}">
+                        <img src="/media/{{course.cover_image}}" width="100%" height="160px" />
+                    </a>
+                </div>
+                <div class="card-content">
+                    <h3 class="content_title">
+                        <p>{{ course.title }}</p>
+                    </h3>
+                </div>
+            </div>
 
+            {% endfor %}
+        </div>
+    </div>
     <div class="block">
         <h2>Courses you have published: </h2>
         <a class="button" href="/add_course">Add New</a>
         <div class="grid_container">
-            {% for course in courses %}
+            {% for course in pcourses %}
             <div class="card">
                 <div style="position: relative;">
                     {% if course.fee == 0 %}
@@ -73,10 +93,15 @@
                         </a>
                     </h3>
                     <div class="v-center">
-                        <span ><p>{{ course.rating }}</p></span>
+                        <span>
+                            <p>{{ course.rating }}</p>
+                        </span>
                         <input class="rating" max="5" id="id_rating" name="rating"
-                            style="--value:{{ course.rating }}; margin: 0 5px;" type="range" value="{{ course.rating }}">
-                        <span><p>({{ course.number_of_rating }})</p></span>
+                            style="--value:{{ course.rating }}; margin: 0 5px;" type="range"
+                            value="{{ course.rating }}">
+                        <span>
+                            <p>({{ course.number_of_rating }})</p>
+                        </span>
                     </div>
                     <div class="date">
                         <h4>

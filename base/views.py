@@ -6,7 +6,7 @@ from time import time
 from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from base.forms import CourseForm, LogInForm, RatingForm, SignUpForm, VideoForm
+from base.forms import CourseForm, LogInForm, RatingForm, SignUpForm, VideoForm, SearchForm
 from base.models import Cart, Course, Rating, StudentCourse, User, Video
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
@@ -15,23 +15,32 @@ from django.core.paginator import Paginator
 
 
 def index(request):
+    if request.POST.get('search') is not None:
+        form=SearchForm(request.POST, request.POST)
+        if form.is_valid():
+            return redirect('/search/'+form.cleaned_data['text'])
+
     latestCourses = Course.objects.all().order_by('-time')[:6]
     topRatedCourses = Course.objects.all().order_by('-rating')[:6]
     mostPopularCourses = Course.objects.all().order_by('-number_of_sold')[:6]
 
-    context = {'login': False,
-               'latestCourses': latestCourses,
-               'topRatedCourses': topRatedCourses,
-               'mostPopularCourses': mostPopularCourses,
-               }
+    context = {
+        'login': False,
+        'latestCourses': latestCourses,
+        'topRatedCourses': topRatedCourses,
+        'mostPopularCourses': mostPopularCourses,
+        'form': SearchForm(),
+    }
     user = request.user
     if user.is_authenticated:
-        context = {'login': True,
-                   'latestCourses': latestCourses,
-                   'topRatedCourses': topRatedCourses,
-                   'mostPopularCourses': mostPopularCourses,
-                   'cart_count': cart_counter(request)
-                   }
+        context = {
+            'login': True,
+            'latestCourses': latestCourses,
+            'topRatedCourses': topRatedCourses,
+            'mostPopularCourses': mostPopularCourses,
+            'cart_count': cart_counter(request),
+            'form': SearchForm(),
+        }
     return render(request, 'index.html', context)
 
 
@@ -140,21 +149,27 @@ def dashboard(request):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
-        result = []
+        sCourse = []
+        pCourse = []
         if user.account_type == 'Student':
             courseIds = StudentCourse.objects.filter(username=user.username)
             for id in courseIds:
-                result.append(Course.objects.filter(id=id.course_id)[0])
+                sCourse.append(Course.objects.filter(id=id.course_id)[0])
 
         elif user.account_type == 'Publisher':
-            result = Course.objects.filter(
+            courseIds = StudentCourse.objects.filter(username=user.username)
+            for id in courseIds:
+                sCourse.append(Course.objects.filter(id=id.course_id)[0])
+            pCourse = Course.objects.filter(
                 username=user.username).order_by("-time")
 
-        context = {'login': True,
-                   'user': user,
-                   'courses': result,
-                   'cart_count': cart_counter(request)
-                   }
+        context = {
+            'login': True,
+            'user': user,
+            'scourses': sCourse,
+            'pcourses': pCourse,
+            'cart_count': cart_counter(request)
+        }
     return render(request, 'dashboard.html', context)
 
 
@@ -162,6 +177,14 @@ def cart(request):
     context = {'login': False}
     user = request.user
     if user.is_authenticated:
+        result = Cart.objects.filter(username=user.username)
+        no_item = len(result) == 0
+        courses = []
+        totalFee = 0
+        for courseId in result:
+            course = Course.objects.filter(id=courseId.course_id)[0]
+            totalFee += course.fee
+            courses.append(course)
         if request.method == 'POST':
             if request.POST.get('delete') is not None:
                 data = request.POST.dict()
@@ -171,34 +194,35 @@ def cart(request):
                 item.delete()
                 return redirect('/cart')
             elif request.POST.get('confirm_parches') is not None:
-                cartItems = Cart.objects.filter(username=user.username)
-                for courseId in cartItems:
-                    course = Course.objects.filter(id=courseId.course_id)[0]
-                    count = len(StudentCourse.objects.filter(
-                        username=user.username, course_id=courseId.course_id))
-                    if count == 0:
-                        studentCourse = StudentCourse(
-                            course_id=courseId.course_id, username=courseId.username)
-                        Course.objects.filter(id=courseId.course_id).update(
-                            number_of_sold=(course.number_of_sold+1))
-                        studentCourse.save()
-                cartItems.delete()
-                return redirect('/dashboard')
+                if totalFee <= user.credit:
+                    cartItems = Cart.objects.filter(username=user.username)
+                    for courseId in cartItems:
+                        course = Course.objects.filter(
+                            id=courseId.course_id)[0]
+                        count = len(StudentCourse.objects.filter(
+                            username=user.username, course_id=courseId.course_id))
+                        if count == 0:
+                            studentCourse = StudentCourse(
+                                course_id=courseId.course_id, username=courseId.username)
+                            Course.objects.filter(id=courseId.course_id).update(
+                                number_of_sold=(course.number_of_sold+1))
+                            studentCourse.save()
+                    User.objects.filter(username=user.username).update(
+                        credit=user.credit-totalFee)
+                    cartItems.delete()
+                    return redirect('/dashboard')
+                else:
+                    messages.info(
+                        request, f"You do not have enough credit.")
+                    return redirect('/cart')
 
-        result = Cart.objects.filter(username=user.username)
-        no_item = len(result) == 0
-        courses = []
-        totalFee = 0
-        for courseId in result:
-            course = Course.objects.filter(id=courseId.course_id)[0]
-            totalFee += course.fee
-            courses.append(course)
-    context = {'login': True,
-               'courses': courses,
-               'total': totalFee,
-               'cart_count': cart_counter(request),
-               'no_item': no_item
-               }
+    context = {
+        'login': True,
+        'courses': courses,
+        'total': totalFee,
+        'cart_count': cart_counter(request),
+        'no_item': no_item
+    }
     return render(request, 'cart.html', context)
 
 
@@ -229,28 +253,36 @@ def view_course(request, id):
                 cartItem.save()
             else:
                 print('already in the cart')
-            return redirect('/view_course/'+id)
+            return redirect('/cart')
         else:
             return redirect('/login')
     if user.is_authenticated:
         is_soldable = len(StudentCourse.objects.filter(
             username=user.username, course_id=id)) == 0
+        if is_soldable:
+            is_soldable = len(Cart.objects.filter(
+                username=user.username, course_id=id)) == 0
+        if is_soldable:
+            is_soldable = len(Course.objects.filter(
+                username=user.username, id=id)) == 0
 
-        context = {'login': True,
-                   'id': id,
-                   'course': result,
-                   'cart_count': cart_counter(request),
-                   'is_soldable': is_soldable,
-                   'page_obj': page_obj
-                   }
+        context = {
+            'login': True,
+            'id': id,
+            'course': result,
+            'cart_count': cart_counter(request),
+            'is_soldable': is_soldable,
+            'page_obj': page_obj
+        }
     else:
-        context = {'login': False,
-                   'id': id,
-                   'course': result,
-                   'cart_count': cart_counter(request),
-                   'is_soldable': True,
-                   'page_obj': page_obj
-                   }
+        context = {
+            'login': False,
+            'id': id,
+            'course': result,
+            'cart_count': cart_counter(request),
+            'is_soldable': True,
+            'page_obj': page_obj
+        }
     return render(request, 'view_course.html', context)
 
 
@@ -320,7 +352,7 @@ def open_course(request, id):
     is_reviewed = len(Rating.objects.filter(
         username=user.username, course_id=id)) == 0
     context = {
-        'first_video': videos[0].video_file,
+        'first_video': videos[0].video_file if len(videos) > 0 else "",
         'login': True,
         'is_reviewed': is_reviewed,
         'course': course,
@@ -340,6 +372,33 @@ def category(request, category):
         'cart_count': cart_counter(request),
     }
     return render(request, 'category.html', context)
+
+
+
+def search(request,text):
+    if request.POST.get('search') is not None:
+        form=SearchForm(request.POST, request.POST)
+        if form.is_valid():
+            return redirect('/search/'+form.cleaned_data['text'])
+    form=SearchForm()
+    courses = Course.objects.filter(title__icontains=text)
+    user = request.user
+    if user.is_authenticated:
+        context = {
+            'login': True,
+            'form':form,
+            'courses': courses,
+            'text':text,
+            'cart_count': cart_counter(request),
+        }
+    else:
+        context = {
+            'login': False,
+            'form':form,
+            'courses': courses,
+            'text':text,
+        }
+    return render(request, 'search.html', context)
 
 
 def time_format(seconds: int):
@@ -363,3 +422,4 @@ def cart_counter(request):
         #     count = len(res['courses'])
         return count
     return 0
+

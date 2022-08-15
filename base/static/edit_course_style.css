@@ -38,19 +38,23 @@ h2 {
 }
 
 .button {
-    color: white;
+    color: var(--main_color);
     float: right;
-    margin: 15px 0px;
+    margin-right: 10px;
+    margin-top: 2px;
     border: 0px;
     border-radius: 10px;
-    background-color: var(--main_color);
-    padding: 7px 10px;
+    background-color: white;
+    padding: 5px;
     text-decoration: none;
     font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 0px;
 }
 
-:hover.button {
+.button:hover {
     cursor: pointer;
+    box-shadow: 2px 2px 4px 2px rgba(168, 168, 168, 0.2);
 }
 
 .add-video-block {
@@ -65,27 +69,24 @@ label {
     font-weight: bold;
 }
 
-input[type=submit] {
-    align-self: baseline;
-    margin: 10px 0 20px 0;
-    float: right;
-    overflow: hidden;
-    background: #000;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 10px;
-}
-
 .s-title {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 23px;
 }
 
 .value {
-    font-size: 17px;
+    font-size: 20px;
 }
 
 .e-margin {
     margin-bottom: 5px;
+}
+
+
+label {
+    display: block;
+    margin: 5px 0 5px 0;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 2px;
 }

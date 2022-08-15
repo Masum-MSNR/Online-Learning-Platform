@@ -1,4 +1,5 @@
 from asyncio.format_helpers import extract_stack
+from dataclasses import field
 import email
 from enum import unique
 from tkinter import Widget
@@ -6,7 +7,7 @@ from turtle import onclick
 from bson import is_valid
 from django import forms
 from django.contrib.auth import authenticate
-from base.models import Course, Rating, User, Video, Rating
+from base.models import Course, Rating, Search, User, Video, Rating
 
 
 class DateInput(forms.DateInput):
@@ -66,7 +67,7 @@ class CourseForm(forms.ModelForm):
     ]
     category = forms.ChoiceField(choices=categories)
     course_type = forms.ChoiceField(choices=types, widget=forms.RadioSelect(attrs={
-        'onclick': "btnSearch_Click()",
+        'onclick': "btnSearch_Click();",
     }))
 
     class Meta:
@@ -78,6 +79,9 @@ class CourseForm(forms.ModelForm):
             'requirement': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
             'description': forms.Textarea(attrs={'rows': 6, 'cols': 60}),
             'username': forms.HiddenInput(),
+            'cover_image': forms.FileInput(attrs={
+                'onchange': "readURL(this);"
+            })
         }
 
 
@@ -88,7 +92,7 @@ class VideoForm(forms.ModelForm):
 
     class Meta:
         model = Video
-        fields = ['course_id','s_id','duration', 'title', 'video_file']
+        fields = ['course_id', 's_id', 'duration', 'title', 'video_file']
         widgets = {
             'course_id': forms.HiddenInput(),
             's_id': forms.HiddenInput(),
@@ -104,8 +108,18 @@ class RatingForm(forms.ModelForm):
 
     class Meta:
         model = Rating
-        fields = ['username','course_id','rating', 'description']
+        fields = ['username', 'course_id', 'rating', 'description']
         widgets = {
             'course_id': forms.HiddenInput(),
             'username': forms.HiddenInput(),
+        }
+
+
+class SearchForm(forms.ModelForm):
+
+    class Meta:
+        model = Search
+        fields = ['text']
+        widgets = {
+            'text': forms.TextInput(attrs={'placeholder': 'Search'}),
         }
