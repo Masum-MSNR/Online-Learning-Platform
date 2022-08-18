@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+
+        <style>
+            body{
+                background: #dedede;
+                font-family: Arial, Helvetica, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            .dropdown{
+                position:fixed;
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            nav{
+                height: 80px;
+                background: #2c3e50;
+                box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            }
+            .logo{
+                padding: 0 0 0 80px;
+                height: auto;
+                font-size: 30px;
+                font-weight: bold;
+                color: white;
+                line-height: 80px;
+                display: inline;
+            }
+            nav ul{
+                padding: 0;
+                margin: 0;
+                float: right;
+                margin-right: 30px;
+            }
+            nav ul li{
+                background: #2c3e50;
+                position: relative;
+                list-style: none;
+                display: inline-block;
+            }
+            nav ul li a{
+                display: block;
+                padding: 0 15px;
+                color: white;
+                text-decoration: none;
+                line-height: 60px;
+                font-size: 20px;
+            }
+            nav ul li a:hover{
+                background: #243342;
+            }
+
+            nav ul ul{
+                position: absolute;
+                top: 60px;
+                display: none;
+            }
+
+            nav ul li:hover > ul{
+                display: block;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="dropdown">
+            <nav>
+                <div class="logo">Online</div>
+                <ul>
+                    <li><a>Home</a></li>
+                    <li><a>Home</a></li>
+                    <li><a>Home</a></li>
+                    
+                    <li><a>Home <i class="fa-solid fa-caret-down"></i></a> 
+                        <ul>
+                            <li><a>Home</a></li>
+                            <li><a>Home</a></li>
+                            <li><a>Home</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </body>
+</html>
+
+
+

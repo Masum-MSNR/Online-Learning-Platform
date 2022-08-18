@@ -106,6 +106,20 @@ nav ul ul {
     display: none;
 }
 
+nav ul ul li{
+    height: 50px;
+    background: rgb(221, 221, 221);
+    border-radius: 0px 0px 10px 10px;
+}
+nav ul ul li a{
+    line-height: 50px;
+}
+
+nav ul ul li a:hover{
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+}
+
 nav ul li:hover>ul {
     display: block;
 }
