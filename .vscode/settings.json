@@ -1,5 +1,6 @@
 {
     "appService.defaultWebAppToDeploy": "/subscriptions/14d3a9fb-72a9-4b6d-93c5-89e6361c9b7e/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/online-learning-platform",
     "appService.deploySubpath": ".",
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "python.analysis.typeCheckingMode": "off"
 }
