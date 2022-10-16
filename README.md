@@ -8,7 +8,7 @@ Steps to run this project:
   2. Then open it with vs code.
   3. Install python in your device if you don't install yet.
   4. Then move to the project folder using terminal
-  5. Then create a virtual environment. To do that follow bellow instructions:-
+  5. Then create a virtual environment. To do that follow bellow instructions:-<br>
         # Linux
         sudo apt-get install python3-venv <br>
         python3 -m venv .venv <br>
@@ -21,6 +21,6 @@ Steps to run this project:
         # Windows
         py -3 -m venv .venv <br>
         .venv\scripts\activate <br>
-  6. Then install all dedpendency in requirements.txt
-  7. Run one last command python manage.py runserver
+  6. Then install all dependency in requirements.txt
+  7. Run one last command python manage.py runserver<br><br>
 This will run the project.
