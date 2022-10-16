@@ -2,7 +2,7 @@
 
 This platform is a webspace or portal for educational content and resources that offers a student everything they need in one place: lectures, resources, opportunities to meet and chat with other students, and more. It is also an excellent way for the student and the teacher to monitor student progress.
 
-This project is made by using Django which is frameworok of python to build webstite. It is easy to use.
+This project is made by using Django which is framework of python to build website. It is easy to use.
 Steps to run this project:
   1. First clone this project.
   2. Then open it with vs code.
@@ -23,4 +23,5 @@ Steps to run this project:
         .venv\scripts\activate <br>
   6. Then install all dependency in requirements.txt
   7. Run one last command python manage.py runserver<br><br>
+
 This will run the project.
