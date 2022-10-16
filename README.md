@@ -10,17 +10,17 @@ Steps to run this project:
   4. Then move to the project folder using terminal
   5. Then create a virtual environment. To do that follow bellow instructions:-
         # Linux
-        sudo apt-get install python3-venv
-        python3 -m venv .venv
-        source .venv/bin/activate
+        sudo apt-get install python3-venv <br>
+        python3 -m venv .venv <br>
+        source .venv/bin/activate <br>
 
         # macOS
-        python3 -m venv .venv
-        source .venv/bin/activate
+        python3 -m venv .venv <br>
+        source .venv/bin/activate <br>
 
         # Windows
-        py -3 -m venv .venv
-        .venv\scripts\activate
+        py -3 -m venv .venv <br>
+        .venv\scripts\activate <br>
   6. Then install all dedpendency in requirements.txt
   7. Run one last command python manage.py runserver
 This will run the project.
